@@ -3,88 +3,51 @@
 <test-box-content 
     [name]="'Название вакансии'"
 >
-
+    <test-input-default/>
 </test-box-content>
 
 <test-box-content 
     [name]="'Должность сотрудника'"
 >
-    
+    <test-vc-position/>
 </test-box-content>
-
 
 <test-box-content 
     [name]="'Оплата'"
 >
-    
+    <test-vc-payment/>
 </test-box-content>
-
 
 <test-box-content 
     [name]="'Требования'"
-    class="requirements"
 >
-    <nz-radio-group>
-        <test-item-label label="Опыт работы">
-            @for (experience of requirements.at(0); track experience.id) {
-                <label 
-                    nz-radio 
-                    [nzValue]="experience.id"
-                >
-                    {{experience.name}}
-                </label>
-            }
-        </test-item-label>
-    </nz-radio-group>
-
-    <nz-radio-group>
-        <test-item-label label="Тип занятости">
-            @for (workType of requirements.at(1); track workType.id) {
-                <label 
-                    nz-radio 
-                    [nzValue]="workType.id"
-                >
-                    {{workType.name}}
-                </label>
-            }
-        </test-item-label>
-    </nz-radio-group>
-
-    <nz-radio-group>
-        <test-item-label label="График работы">
-            @for (workTime of requirements.at(2); track workTime.id) {
-                <label 
-                    nz-radio 
-                    [nzValue]="workTime.id"
-                >
-                    {{workTime.name}}
-                </label>
-            }
-        </test-item-label>
-    </nz-radio-group>
+    <test-vc-requirements 
+        [experienceList]="requirements.experiences"
+        [workTimeList]="requirements.workTimes"
+        [workTypeList]="requirements.workTypes"
+    />
 </test-box-content>
 
 <test-box-content 
     [name]="'Описание'"
 >
-    
+    <test-textarea/>
 </test-box-content>
 
 <test-box-content 
     [name]="'Требуемые навыки'"
 >
-    
+    <test-vc-skills/>
 </test-box-content>
 
 <test-box-content 
     [name]="'Языки'"
 >
-    
+    <test-vc-language/>
 </test-box-content>
-
 
 <test-box-content 
     [name]="'Местоположение'"
 >
-    
+    <test-vc-location/>
 </test-box-content>

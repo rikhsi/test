@@ -1,16 +1,19 @@
 @import 'colors';
+@import 'mixins';
 
-html.default {
-    .ant-input {
-        color: @t-black-100;
-    }
-}
+//nz-input
+@input-height-base: 40px;
+@input-height-lg: 48px;
 
 .ant-input {
     border-radius: 10px !important;
 
     &-lg {
-        font-size: 19px;
-        font-weight: 600;
+        font-size: 14px;
+        font-weight: 500;
     }
+}
+
+.ant-form-item-label {
+    .text(600,12px,100%);
 }

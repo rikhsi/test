@@ -1,0 +1,26 @@
+@import 'colors';
+@import 'mixins';
+
+.modal-confirm {
+    width: 450px;
+    border-radius: 16px;
+    padding: 16px 24px;
+    background: @t-white-100;
+
+    .title {
+        .text(600,18px,100%);
+        margin-bottom: 8px;
+    }
+
+    .description {
+        .text(400,14px,100%);
+        margin-bottom: 30px;
+    }
+
+    .footer {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        column-gap: 12px;
+    }
+}

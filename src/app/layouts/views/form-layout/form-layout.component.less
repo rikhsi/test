@@ -6,6 +6,8 @@
     display: flex;
 
     .main {
+        .box-container-mixin(600px);
+
         padding: 30px 0;
         display: flex;
         flex-direction: column;
@@ -23,7 +25,16 @@
             background: @t-grey-100;
         }
 
-        .box-container-mixin(600px);
+        .content {
+            flex: 1;
+        }
+
+        .actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     .view {

@@ -1,25 +1,46 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BoxContentComponent, ItemLabelComponent } from '@shared/components';
-import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
+import {
+  BoxContentComponent,
+  InputDefaultComponent,
+  TextareaComponent,
+} from '@shared/components';
 import { VacancyService } from './services/vacancy.service';
 import { VacancyResourseService } from './services/vacancy-resourse.service';
 import { ActivatedRoute } from '@angular/router';
-import { FilterItem } from '@api/models';
+import {
+  VcLanguageComponent,
+  VcLocationComponent,
+  VcPaymentComponent,
+  VcPositionComponent,
+  VcRequirementsComponent,
+  VcSkillsComponent,
+} from './components';
+import { VcHandbook, VcRequirement } from './models';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'test-vacancy',
   imports: [
     BoxContentComponent,
-    ItemLabelComponent,
-    NzRadioGroupComponent,
-    NzRadioComponent,
+    VcLanguageComponent,
+    VcLocationComponent,
+    VcPaymentComponent,
+    VcPositionComponent,
+    VcRequirementsComponent,
+    VcSkillsComponent,
+    InputDefaultComponent,
+    TextareaComponent,
   ],
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VacancyComponent {
-  requirements: Array<FilterItem[]> = this.route.snapshot.data['requirements'];
+  get routeData() {
+    return <VcHandbook>this.route.snapshot.data;
+  }
+
+  requirements: VcRequirement = this.routeData.requirements;
 
   constructor(
     private vrService: VacancyResourseService,

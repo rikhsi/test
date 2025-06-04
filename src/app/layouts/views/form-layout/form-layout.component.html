@@ -11,7 +11,34 @@
         </a>
     </div>
 
-    <router-outlet/>
+    <div class="content">
+        <router-outlet/>
+    </div>
+
+    <div class="actions">
+        <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            nzShape="round"
+            nzDanger
+            [disabled]="disableReset()"
+            (click)="reset()"
+        >
+            Очистить
+        </button>
+    
+        <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            nzShape="round"
+            [disabled]="disableSubmit()"
+            (click)="submit()"
+        >
+            Сохранить
+        </button>
+    </div>
 </main>
 
 <div class="view">

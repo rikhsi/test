@@ -4,8 +4,8 @@ import {
   WorkTimeService,
   WorkTypeService,
 } from '@api/controllers';
-import { FilterItem } from '@api/models';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
+import { VcRequirement } from '../models';
 
 @Injectable()
 export class VacancyResourseService {
@@ -15,11 +15,17 @@ export class VacancyResourseService {
     private wTypeService: WorkTypeService
   ) {}
 
-  getRequirements$(): Observable<Array<FilterItem>[]> {
+  public getRequirements$(): Observable<VcRequirement> {
     return forkJoin([
       this.jeService.getAll$(),
       this.wTypeService.getAll$(),
       this.wTimeService.getAll$(),
-    ]);
+    ]).pipe(
+      map(([experiences, workTypes, workTimes]) => ({
+        experiences,
+        workTypes,
+        workTimes,
+      }))
+    );
   }
 }

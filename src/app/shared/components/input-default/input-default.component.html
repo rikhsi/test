@@ -1,1 +1,21 @@
-<p>input-default works!</p>
+<nz-form-item>
+    @if (label(); as label) {
+        <nz-form-label 
+            [nzFor]="label"
+            [nzNoColon]="noColon()"
+        >
+            {{label}}
+        </nz-form-label>
+    }
+
+    <nz-form-control>
+        <input 
+            nz-input 
+            [placeholder]="placeholder()"
+            [nzSize]="size()"
+            [id]="label()" 
+            [(ngModel)]="value"
+            (ngModelChange)="modelChange($event)"
+        />
+    </nz-form-control>
+</nz-form-item>

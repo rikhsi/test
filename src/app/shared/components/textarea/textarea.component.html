@@ -1,1 +1,21 @@
-<p>textarea works!</p>
+<nz-form-item>
+    @if (label(); as label) {
+        <nz-form-label 
+            [nzFor]="label"
+            [nzNoColon]="noColon()"
+        >
+            {{label}}
+        </nz-form-label>
+    }
+
+    <nz-form-control>
+        <textarea 
+            nz-input 
+            [placeholder]="placeholder()"
+            [nzSize]="size()"
+            [id]="label()" 
+            [(ngModel)]="value"
+            (ngModelChange)="modelChange($event)">
+        </textarea>
+    </nz-form-control>
+</nz-form-item>
