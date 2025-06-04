@@ -1,0 +1,24 @@
+@import 'colors';
+@import 'mixins';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    border: 1px solid @t-grey-300;
+    padding: 20px;
+    border-radius: 12px;
+    height: 400px;
+    user-select: none;
+
+    [nz-icon] {
+        align-self: center;
+        font-size: 50px;
+        flex: 1;
+        color: @t-blue-100;
+    }
+
+    [nz-radio] {
+        .text(500,18px,110%);
+    }
+}

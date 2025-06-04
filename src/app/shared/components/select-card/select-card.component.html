@@ -1,0 +1,9 @@
+<span nz-icon [nzType]="icon()"></span>
+
+<label 
+    nz-radio 
+    [nzValue]="cardId()"
+    (click)="modelChange(value())"
+>
+    {{name()}}
+</label>

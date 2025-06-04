@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
 import { RouteBase } from '@constants';
+import { FormLayoutComponent, MainLayoutComponent } from '@layouts/views';
 
 export const routes: Routes = [
   {
     path: RouteBase.MAIN,
-    loadComponent: () =>
-      import('@pages/main/main.component').then((c) => c.MainComponent),
+    component: MainLayoutComponent,
+    loadChildren: () =>
+      import('@pages/main/main.routing').then((r) => r.routes),
   },
   {
-    path: RouteBase.RESUME,
-    loadComponent: () =>
-      import('@pages/resume/resume.component').then((c) => c.ResumeComponent),
+    path: RouteBase.FORMS,
+    component: FormLayoutComponent,
+    loadChildren: () =>
+      import('@pages/forms/forms.routing').then((r) => r.routes),
   },
   {
-    path: RouteBase.VACANCY,
-    loadComponent: () =>
-      import('@pages/vacancy/vacancy.component').then(
-        (c) => c.VacancyComponent
-      ),
+    path: '**',
+    redirectTo: RouteBase.MAIN,
   },
 ];

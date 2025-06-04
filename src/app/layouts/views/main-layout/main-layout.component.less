@@ -1,0 +1,17 @@
+@import (multiple) 'box';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+        .box-container();
+    }
+
+    .main {
+        flex: 1;
+
+        .box-container();
+    }
+}

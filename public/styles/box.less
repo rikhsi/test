@@ -1,10 +1,20 @@
-.box-wrapper {
+.box-wrapper-mixin() {
     padding-right: 20px;
     padding-left: 20px;
 }
 
-.box-container {
+.box-container-mixin() {
+    width: 100%;
     display: block;
     max-width: 1120px;
     margin: 0 auto;
 }
+
+.box-wrapper {
+    .box-wrapper-mixin();
+}
+
+.box-container {
+    .box-container-mixin();
+}
+

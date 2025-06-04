@@ -1,0 +1,22 @@
+@import 'mixins';
+
+:host {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    padding: 20px 0;
+
+    .title {
+        .text(700,20px,120%);
+    }   
+
+    .list {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 30px;
+    }
+
+    .continue {
+        width: 200px;
+    }
+}

@@ -1,1 +1,26 @@
-<p>main works!</p>
+<h1 class="title">Доступные формы</h1>
+
+<nz-radio-group 
+    [formControl]="formViewControl" 
+    class="list"
+>
+    @for (item of formList; track item.value) {
+        <test-select-card
+            [cardId]="item.value"
+            [icon]="item.icon"
+            [name]="item.label"
+        />
+    }
+</nz-radio-group>
+
+<button 
+    nz-button 
+    nzType="primary" 
+    nzSize="large"
+    nzShape="round"
+    [routerLink]="['forms', formViewControl.value]"
+    [disabled]="formViewControl.invalid"
+    class="continue"
+>
+    Продолжить
+</button>
