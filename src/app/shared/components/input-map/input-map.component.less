@@ -1,0 +1,46 @@
+@import 'colors';
+@import 'mixins';
+
+:host {
+    display: block;
+    max-width: 500px;
+
+    .label {
+        font-family: 'Inter', sans-serif !important;
+        .text(600,13px,100%);
+    }
+
+    ::ng-deep .ant-form-item {
+        width: fit-content;
+        height: 100%;
+    }
+
+    ::ng-deep .ant-form-item-control-input {
+        height: 100%;
+    }
+
+    ::ng-deep .ant-form-item-control-input-content {
+        height: 100%;
+    }
+
+    ::ng-deep .ant-spin-nested-loading {
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid @t-grey-200;
+
+        &.placeholder {
+            background: @t-grey-200;
+        }
+
+        &.error {
+            border-color: @t-red-100;
+        }
+    }
+
+    ::ng-deep .ant-spin-container {
+        height: 100%;
+        background: @t-grey-200;
+    }
+}

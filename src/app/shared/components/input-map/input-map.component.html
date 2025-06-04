@@ -1,0 +1,40 @@
+<nz-form-item>
+    @if (label()) {
+        <nz-form-label
+            [nzLabelAlign]="'left'"
+            [nzXs]="24"
+            [nzRequired]="required()"
+            [nzFor]="label()"
+            [nzNoColon]="true"
+        >
+            <span class="label">
+                {{ label() }}
+            </span>
+        </nz-form-label>
+    }
+    <nz-form-control
+        [nzValidateStatus]="status()"
+        [nzErrorTip]="message()"
+    >       
+        <nz-spin 
+            [nzSpinning]="!isReady()"
+            [ngClass]="{error: message()}"
+        >    
+            @defer (on viewport) {
+                <ya-map
+                    [center]="center()"
+                    [zoom]="zoom()"
+                    (ready)="onMapInit($event)"
+                    (yaclick)="onMapClick($event)"
+                >
+                    <ya-placemark 
+                        [geometry]="coords()"
+                        (geometrychange)="geometryChange()">
+                    </ya-placemark>
+                </ya-map>
+            } @placeholder {
+                <div class="ant-spin-nested-loading placeholder"></div>
+            }
+        </nz-spin>
+    </nz-form-control>
+</nz-form-item>
