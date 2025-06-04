@@ -1,0 +1,48 @@
+@import 'colors';
+
+@btn-height-base: 40px;
+@btn-height-lg: 50px;
+
+.ant-btn {
+    &-round {
+        border-radius: 12px;
+    }
+
+    &-lg {
+        font-weight: 600;
+        font-size: 19px;
+        line-height: 100%;
+    }
+
+    &.bold {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: inherit;
+
+        [nz-icon] {
+            font-size: 14px;
+        }
+    }
+
+    &-link {
+        padding: 0;
+        height: fit-content;
+    }
+}
+
+button {
+    transition: 0.3s all;
+    
+    &.ripple {
+        box-shadow: none;
+
+        &:active {
+            background: fade(@t-black-100,10%);
+        }
+    }
+
+    &.border {
+        box-shadow: none;
+        border: none;
+    }
+}

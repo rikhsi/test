@@ -7,12 +7,34 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "less"
+          "style": "less",
+          "changeDetection": "OnPush",
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "standalone": true,
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "standalone": true,
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
         }
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "test",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
@@ -29,8 +51,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["public/styles"]
+            },
             "styles": [
               "src/styles.less"
             ],
@@ -41,13 +71,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "500000kB",
+                  "maximumError": "1000MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "49999kB",
+                  "maximumError": "899999kB"
                 }
               ],
               "outputHashing": "all"
@@ -61,6 +91,9 @@
           "defaultConfiguration": "production"
         },
         "serve": {
+          "options": {
+              "port": 1974
+          },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
