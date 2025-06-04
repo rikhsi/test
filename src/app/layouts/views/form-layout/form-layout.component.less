@@ -1,0 +1,26 @@
+@import 'colors';
+@import 'mixins';
+
+:host {
+    display: flex;
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .view {
+        position: sticky;
+        top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: @t-blue-100;
+        width: 100%;
+        max-width: 560px;
+        height: 100svh;
+        pointer-events: none;
+        user-select: none;
+    }
+}

@@ -1,8 +1,6 @@
 @import 'mixins';
 
 :host {
-    display: flex;
-    flex-direction: column;
     row-gap: 30px;
     padding: 20px 0;
 
@@ -14,9 +12,11 @@
         display: grid;
         grid-template-columns: repeat(2,1fr);
         gap: 30px;
+        flex: 1;
     }
 
     .continue {
         width: 200px;
+        align-self: flex-end;
     }
 }
