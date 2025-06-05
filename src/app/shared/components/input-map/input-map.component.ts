@@ -2,11 +2,13 @@ import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  forwardRef,
   input,
   model,
   signal,
 } from '@angular/core';
-import { ControlBaseComponent } from '@shared/helpers';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlBaseDirective } from '@shared/directives';
 import { MapCenter, YMapTheme } from '@typings';
 import {
   AngularYandexMapsModule,
@@ -22,8 +24,15 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
   templateUrl: './input-map.component.html',
   styleUrls: ['./input-map.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputMapComponent),
+      multi: true,
+    },
+  ],
 })
-export class InputMapComponent extends ControlBaseComponent<number[]> {
+export class InputMapComponent extends ControlBaseDirective<number[]> {
   coords = model<number[]>();
   theme = input<YMapTheme>();
   center = input<MapCenter>([41.2995, 69.2401]);

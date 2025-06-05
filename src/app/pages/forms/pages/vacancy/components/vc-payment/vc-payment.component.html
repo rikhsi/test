@@ -1,1 +1,33 @@
-<p>vc-payment works!</p>
+ <nz-segmented class="segment">
+    <label nz-segmented-item nzValue="monthly">
+        Ежемесячная
+    </label>
+
+    <label nz-segmented-item nzValue="hourly">
+        Почасовая
+    </label>
+</nz-segmented>
+
+<nz-radio-group class="group">
+    <div class="range">
+        <label nz-radio [nzValue]="'full'">Диапазон (от - до)</label>
+
+        <div class="controls">
+            <div class="money">
+                <test-input-default
+                    placeholder="от"
+                    type="number"
+                />
+
+                <test-input-default
+                    placeholder="до"
+                    type="number"
+                />
+            </div>
+
+            <t-select-default/>
+        </div>
+    </div>
+    <label nz-radio [nzValue]="'one'">Одно значение</label>
+    <label nz-radio [nzValue]="'none'">Не указано</label>
+</nz-radio-group>

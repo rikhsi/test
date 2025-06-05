@@ -1,17 +1,11 @@
 <div class="places">
-    <t-select-default
-        [placeholder]="'Выберите варианты'"
-        [label]="'Рабочая область'"
-    >
+    <t-select-default [label]="'Рабочая область'">
         @for (region of regions(); track region.id) {
             <nz-option [nzValue]="region.id">{{region.name}}</nz-option>
         }
     </t-select-default>
 
-    <t-select-default
-        [placeholder]="'Выберите варианты'"
-        [label]="'Город работы (район)'"
-    >
+    <t-select-default [label]="'Город работы (район)'">
         @for (district of discricts(); track district.id) {
             <nz-option [nzValue]="district.id">{{district.name}}</nz-option>
         }

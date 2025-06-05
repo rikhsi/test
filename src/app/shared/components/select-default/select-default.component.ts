@@ -13,7 +13,7 @@ import {
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { SelectItem } from '@typings';
 import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { ControlBaseComponent } from '@shared/helpers';
+import { ControlBaseDirective } from '@shared/directives';
 
 @Component({
   selector: 't-select-default',
@@ -28,10 +28,10 @@ import { ControlBaseComponent } from '@shared/helpers';
     NzFormItemComponent,
   ],
 })
-export class SelectDefaultComponent extends ControlBaseComponent<NzSafeAny> {
+export class SelectDefaultComponent extends ControlBaseDirective<NzSafeAny> {
   label = input<string>('');
   options = model<SelectItem<NzSafeAny>[]>([]);
-  placeholder = input<string>('');
+  placeholder = input<string>('Выберите варианты');
   size = input<NzSizeLDSType>('large');
   noColon = input<boolean>(true);
 }

@@ -5,7 +5,7 @@ import {
   NzFormItemComponent,
   NzFormLabelComponent,
 } from 'ng-zorro-antd/form';
-import { ControlBaseComponent } from '@shared/helpers';
+import { ControlBaseDirective } from '@shared/directives';
 import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { FormsModule } from '@angular/forms';
 
@@ -16,15 +16,16 @@ import { FormsModule } from '@angular/forms';
     NzFormItemComponent,
     NzFormLabelComponent,
     NzFormControlComponent,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './input-default.component.html',
   styleUrl: './input-default.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InputDefaultComponent extends ControlBaseComponent<string> {
+export class InputDefaultComponent extends ControlBaseDirective<string> {
   label = input<string>();
   placeholder = input<string>('');
   noColon = input<boolean>(true);
   size = input<NzSizeLDSType>('large');
+  type = input<string>('text');
 }

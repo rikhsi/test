@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ControlBaseComponent } from '@shared/helpers';
+import { ControlBaseDirective } from '@shared/directives';
 import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import {
   NzFormItemComponent,
@@ -22,7 +22,7 @@ import { NzInputDirective } from 'ng-zorro-antd/input';
   styleUrl: './textarea.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TextareaComponent extends ControlBaseComponent<string> {
+export class TextareaComponent extends ControlBaseDirective<string> {
   label = input<string>();
   placeholder = input<string>('');
   noColon = input<boolean>(true);

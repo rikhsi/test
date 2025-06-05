@@ -5,7 +5,7 @@ import {
   input,
   Optional,
 } from '@angular/core';
-import { ControlBaseComponent } from '@shared/helpers';
+import { ControlBaseDirective } from '@shared/directives';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
@@ -17,7 +17,7 @@ import { NzRadioComponent, NzRadioGroupComponent } from 'ng-zorro-antd/radio';
   styleUrl: './select-card.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectCardComponent extends ControlBaseComponent<NzSafeAny> {
+export class SelectCardComponent extends ControlBaseDirective<NzSafeAny> {
   name = input.required<string>();
   cardId = input.required<NzSafeAny>();
   icon = input<string>('question');

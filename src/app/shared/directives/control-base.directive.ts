@@ -1,24 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  forwardRef,
-  model,
-} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Directive, model } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 import { FunctionType } from '@typings';
 
-@Component({
-  template: ``,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ControlBaseComponent),
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export abstract class ControlBaseComponent<T> implements ControlValueAccessor {
+@Directive()
+export abstract class ControlBaseDirective<T> implements ControlValueAccessor {
   value = model<T>();
   disabled = model<boolean>(false, { alias: 'blocked' });
 
