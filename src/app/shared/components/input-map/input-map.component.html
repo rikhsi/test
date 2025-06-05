@@ -1,15 +1,13 @@
 <nz-form-item>
-    @if (label()) {
+    @if (label(); as label) {
         <nz-form-label
             [nzLabelAlign]="'left'"
             [nzXs]="24"
             [nzRequired]="required()"
-            [nzFor]="label()"
+            [nzFor]="label"
             [nzNoColon]="true"
         >
-            <span class="label">
-                {{ label() }}
-            </span>
+            {{ label }}
         </nz-form-label>
     }
     <nz-form-control

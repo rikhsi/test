@@ -20,7 +20,7 @@ export class MConfirmComponent implements OnInit {
   config = model<ConfirmModal>();
 
   constructor(
-    private modalRef: NzModalRef,
+    private modalRef: NzModalRef<ConfirmModal, boolean>,
     @Inject(NZ_MODAL_DATA) private modalData: ConfirmModal
   ) {}
 

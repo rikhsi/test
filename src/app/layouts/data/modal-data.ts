@@ -1,4 +1,6 @@
-export const RESET_MODAL_DATA = {
+import { ConfirmModal } from '@typings';
+
+export const RESET_MODAL_DATA: ConfirmModal = {
   title: 'Очистка формы',
   description: 'Это действие обнулит форму!',
   cancel: {
@@ -11,7 +13,7 @@ export const RESET_MODAL_DATA = {
   },
 };
 
-export const SUBMIT_MODAL_DATA = {
+export const SUBMIT_MODAL_DATA: ConfirmModal = {
   title: 'Подтвердить форму',
   description: 'Это действие сохранить форму!',
   cancel: {

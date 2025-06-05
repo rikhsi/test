@@ -1,1 +1,24 @@
-<p>select-default works!</p>
+<nz-form-item>
+  @if (label(); as label) {
+      <nz-form-label 
+          [nzFor]="label"
+          [nzNoColon]="noColon()"
+      >
+          {{label}}
+    </nz-form-label>
+  }
+  <nz-form-control>
+    <nz-select
+      [nzSize]="size()"
+      [nzId]="label()" 
+      [nzShowArrow]="true"
+      [(ngModel)]="value"
+      [nzShowSearch]="true"
+      (ngModelChange)="modelChange($event)"
+      [nzPlaceHolder]="placeholder()"
+      [disabled]="disabled() || !options()?.length"
+    >
+       <ng-content/>
+    </nz-select>
+  </nz-form-control>
+</nz-form-item>

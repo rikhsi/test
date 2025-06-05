@@ -16,7 +16,6 @@ import {
   VcSkillsComponent,
 } from './components';
 import { VcHandbook, VcRequirement } from './models';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'test-vacancy',

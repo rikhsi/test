@@ -17,7 +17,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @Component({
-  selector: 'iz-input-map',
+  selector: 't-input-map',
   imports: [AngularYandexMapsModule, NzSpinModule, NzFormModule, NgClass],
   templateUrl: './input-map.component.html',
   styleUrls: ['./input-map.component.less'],
@@ -45,6 +45,7 @@ export class InputMapComponent extends ControlBaseComponent<number[]> {
     target.controls.remove('rulerControl');
     target.controls.remove('clusterer');
     target.controls.remove('trafficControl');
+    target.controls.remove('fullscreenControl');
 
     target.cursors.push('pointer');
 

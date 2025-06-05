@@ -5,6 +5,7 @@ import { MODAL_OPTIONS } from '@constants';
 import { RESET_MODAL_DATA, SUBMIT_MODAL_DATA } from '@layouts/data';
 import { FormLayoutService } from '@layouts/services';
 import { MConfirmComponent } from '@shared/modals';
+import { ConfirmModal } from '@typings';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -36,7 +37,7 @@ export class FormLayoutComponent {
 
   reset(): void {
     this.nmService
-      .create({
+      .create<MConfirmComponent, ConfirmModal, boolean>({
         ...MODAL_OPTIONS,
         nzData: RESET_MODAL_DATA,
         nzContent: MConfirmComponent,
@@ -49,7 +50,7 @@ export class FormLayoutComponent {
 
   submit(): void {
     this.nmService
-      .create({
+      .create<MConfirmComponent, ConfirmModal, boolean>({
         ...MODAL_OPTIONS,
         nzData: SUBMIT_MODAL_DATA,
         nzContent: MConfirmComponent,
