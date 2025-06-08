@@ -1,59 +1,61 @@
-<nz-radio-group>
-    <nz-form-label 
-        [nzLabelWrap]="true"
-        [nzNoColon]="true"
-    >
-        Опыт работы
-    </nz-form-label>
-
-    <div class="row">
-        @for (experience of experienceList(); track experience.id) {
-            <label 
-                nz-radio 
-                [nzValue]="experience.id"
-            >
-                {{experience.name}}
-            </label>
-        }
-    </div>
-</nz-radio-group>
-
-<nz-radio-group>
-    <nz-form-label 
-        [nzLabelWrap]="true"
-        [nzNoColon]="true"
-    >
-        Тип занятости
-    </nz-form-label>
-
-    <div class="row">
-        @for (workType of workTypeList(); track workType.id) {
-            <label 
-                nz-radio 
-                [nzValue]="workType.id"
-            >
-                {{workType.name}}
-            </label>
-        }
-    </div>
-</nz-radio-group>
-
-<nz-radio-group>
-    <nz-form-label 
-        [nzLabelWrap]="true"
-        [nzNoColon]="true"
-    >
-        График работы
-    </nz-form-label>
-
-    <div class="row">
-        @for (workTime of workTimeList(); track workTime.id) {
-            <label 
-                nz-radio 
-                [nzValue]="workTime.id"
-            >
-                {{workTime.name}}
-            </label>
-        }
-    </div>
-</nz-radio-group>
+<form [formGroup]="form">
+    <nz-radio-group formControlName="workExperience">
+        <nz-form-label 
+            [nzLabelWrap]="true"
+            [nzNoColon]="true"
+        >
+            Опыт работы
+        </nz-form-label>
+    
+        <div class="row">
+            @for (experience of experienceList(); track experience.id) {
+                <label 
+                    nz-radio 
+                    [nzValue]="experience.id"
+                >
+                    {{experience.name}}
+                </label>
+            }
+        </div>
+    </nz-radio-group>
+    
+    <nz-radio-group formControlName="workType">
+        <nz-form-label 
+            [nzLabelWrap]="true"
+            [nzNoColon]="true"
+        >
+            Тип занятости
+        </nz-form-label>
+    
+        <div class="row">
+            @for (workType of workTypeList(); track workType.id) {
+                <label 
+                    nz-radio 
+                    [nzValue]="workType.id"
+                >
+                    {{workType.name}}
+                </label>
+            }
+        </div>
+    </nz-radio-group>
+    
+    <nz-radio-group formControlName="workTime">
+        <nz-form-label 
+            [nzLabelWrap]="true"
+            [nzNoColon]="true"
+        >
+            График работы
+        </nz-form-label>
+    
+        <div class="row">
+            @for (workTime of workTimeList(); track workTime.id) {
+                <label 
+                    nz-radio 
+                    [nzValue]="workTime.id"
+                >
+                    {{workTime.name}}
+                </label>
+            }
+        </div>
+    </nz-radio-group>
+</form>

@@ -1,33 +1,41 @@
- <nz-segmented class="segment">
-    <label nz-segmented-item nzValue="monthly">
-        Ежемесячная
-    </label>
-
-    <label nz-segmented-item nzValue="hourly">
-        Почасовая
-    </label>
-</nz-segmented>
-
-<nz-radio-group class="group">
-    <div class="range">
-        <label nz-radio [nzValue]="'full'">Диапазон (от - до)</label>
-
-        <div class="controls">
-            <div class="money">
-                <test-input-default
-                    placeholder="от"
-                    type="number"
-                />
-
-                <test-input-default
-                    placeholder="до"
-                    type="number"
-                />
+<form [formGroup]="paymentForm">
+    <nz-segmented 
+        [nzDisabled]="typeControl.disabled" 
+        formControlName="type" 
+        class="segment"
+    >
+        <label nz-segmented-item nzValue="MONTH">
+            Ежемесячная
+        </label>
+    
+        <label nz-segmented-item nzValue="HOUR">
+            Почасовая
+        </label>
+    </nz-segmented>
+    
+    <nz-radio-group formControlName="duration" class="group">
+        <div class="range">
+            <label nz-radio [nzValue]="'BOTH'">Диапазон (от - до)</label>
+    
+            <div class="controls">
+                <div class="money">
+                    <test-input-default
+                        placeholder="от"
+                        type="number"
+                        formControlName="from"
+                    />
+    
+                    <test-input-default
+                        placeholder="до"
+                        type="number"
+                        formControlName="to"
+                    />
+                </div>
+    
+                <t-select-default formControlName="currency"/>
             </div>
-
-            <t-select-default/>
         </div>
-    </div>
-    <label nz-radio [nzValue]="'one'">Одно значение</label>
-    <label nz-radio [nzValue]="'none'">Не указано</label>
-</nz-radio-group>
+        <label nz-radio [nzValue]="'ONE'">Одно значение</label>
+        <label nz-radio [nzValue]="'NONE'">Не указано</label>
+    </nz-radio-group>
+</form>

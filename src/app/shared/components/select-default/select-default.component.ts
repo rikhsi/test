@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  forwardRef,
   input,
   model,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
   NzFormControlComponent,
   NzFormItemComponent,
@@ -26,6 +27,13 @@ import { ControlBaseDirective } from '@shared/directives';
     NzFormControlComponent,
     NzSelectModule,
     NzFormItemComponent,
+  ],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectDefaultComponent),
+      multi: true,
+    },
   ],
 })
 export class SelectDefaultComponent extends ControlBaseDirective<NzSafeAny> {

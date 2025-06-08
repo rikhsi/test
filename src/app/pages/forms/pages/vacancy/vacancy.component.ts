@@ -4,8 +4,7 @@ import {
   InputDefaultComponent,
   TextareaComponent,
 } from '@shared/components';
-import { VacancyService } from './services/vacancy.service';
-import { VacancyResourseService } from './services/vacancy-resourse.service';
+import { VacancyFormService } from './services';
 import { ActivatedRoute } from '@angular/router';
 import {
   VcLanguageComponent,
@@ -16,6 +15,8 @@ import {
   VcSkillsComponent,
 } from './components';
 import { VcHandbook, VcRequirement } from './models';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PaymentDurationDirective } from './directives';
 
 @Component({
   selector: 'test-vacancy',
@@ -29,6 +30,8 @@ import { VcHandbook, VcRequirement } from './models';
     VcSkillsComponent,
     InputDefaultComponent,
     TextareaComponent,
+    ReactiveFormsModule,
+    PaymentDurationDirective,
   ],
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
@@ -39,11 +42,14 @@ export class VacancyComponent {
     return <VcHandbook>this.route.snapshot.data;
   }
 
+  get vacancyForm() {
+    return this.vfService.vacancyForm;
+  }
+
   requirements: VcRequirement = this.routeData.requirements;
 
   constructor(
-    private vrService: VacancyResourseService,
-    private vService: VacancyService,
+    private vfService: VacancyFormService,
     private route: ActivatedRoute
   ) {}
 }

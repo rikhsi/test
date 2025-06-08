@@ -1,37 +1,37 @@
-:host {
+form {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 20px;    
+}
 
-    .segment {
-        width: fit-content;
+.segment {
+    width: fit-content;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    .money {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        margin-top: 14px;
     }
 
-    .group {
-        display: flex;
-        flex-direction: column;
-        row-gap: 12px;
+    test-input-default {
+        flex: 1;
+        width: 100%;
     }
 
-    .controls {
-        display: flex;
-        flex-direction: column;
-        row-gap: 10px;
-
-        .money {
-            display: flex;
-            align-items: center;
-            column-gap: 10px;
-            margin-top: 14px;
-        }
-
-        test-input-default {
-            flex: 1;
-            width: 100%;
-        }
-
-        t-select-default {
-            max-width: 49%;
-        }
+    t-select-default {
+        max-width: 49%;
     }
 }

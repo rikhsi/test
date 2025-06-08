@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  input,
+} from '@angular/core';
 import { NzInputDirective } from 'ng-zorro-antd/input';
 import {
   NzFormControlComponent,
@@ -7,7 +12,14 @@ import {
 } from 'ng-zorro-antd/form';
 import { ControlBaseDirective } from '@shared/directives';
 import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
-import { FormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormsModule,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 
 @Component({
   selector: 'test-input-default',
@@ -21,11 +33,30 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './input-default.component.html',
   styleUrl: './input-default.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputDefaultComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => InputDefaultComponent),
+      multi: true,
+    },
+  ],
 })
-export class InputDefaultComponent extends ControlBaseDirective<string> {
+export class InputDefaultComponent
+  extends ControlBaseDirective<string>
+  implements Validator
+{
   label = input<string>();
   placeholder = input<string>('');
   noColon = input<boolean>(true);
   size = input<NzSizeLDSType>('large');
   type = input<string>('text');
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null;
+  }
 }

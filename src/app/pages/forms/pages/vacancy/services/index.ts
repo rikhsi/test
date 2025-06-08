@@ -1,2 +1,2 @@
 export * from './vacancy-resourse.service';
-export * from './vacancy.service';
+export * from './vacancy-form.service';
