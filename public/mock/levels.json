@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "A1",
+    "languageId": 3
+  },
+  {
+    "id": 2,
+    "name": "A2",
+    "languageId": 3
+  },
+  {
+    "id": 3,
+    "name": "B1",
+    "languageId": 3
+  },
+  {
+    "id": 4,
+    "name": "B2",
+    "languageId": 3
+  },
+  {
+    "id": 5,
+    "name": "C1",
+    "languageId": 3
+  },
+  {
+    "id": 6,
+    "name": "C2",
+    "languageId": 3
+  },
+  {
+    "id": 7,
+    "name": "Начальный",
+    "languageId": 2
+  },
+  {
+    "id": 8,
+    "name": "Средний",
+    "languageId": 2
+  },
+  {
+    "id": 9,
+    "name": "Продвинутый",
+    "languageId": 2
+  },
+  {
+    "id": 7,
+    "name": "Boshlang`ich",
+    "languageId": 1
+  },
+  {
+    "id": 8,
+    "name": "O`rta",
+    "languageId": 1
+  },
+  {
+    "id": 9,
+    "name": "Mukammal",
+    "languageId": 1
+  }
+]

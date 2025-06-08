@@ -17,3 +17,11 @@ export enum RegionApiUrl {
 export enum DistrictApiUrl {
   LIST = 'districts.json',
 }
+
+export enum LanguageApiUrl {
+  LIST = 'language.json',
+}
+
+export enum LevelApiUrl {
+  LIST = 'level.json',
+}
