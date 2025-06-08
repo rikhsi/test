@@ -3,7 +3,6 @@ import {
   Component,
   forwardRef,
   input,
-  model,
 } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -12,9 +11,9 @@ import {
   NzFormLabelComponent,
 } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { SelectItem } from '@typings';
 import { NzSafeAny, NzSizeLDSType } from 'ng-zorro-antd/core/types';
 import { ControlBaseDirective } from '@shared/directives';
+import { SelectItem } from '@typings';
 
 @Component({
   selector: 't-select-default',
@@ -37,8 +36,9 @@ import { ControlBaseDirective } from '@shared/directives';
   ],
 })
 export class SelectDefaultComponent extends ControlBaseDirective<NzSafeAny> {
+  options = input<SelectItem<NzSafeAny>[]>([]);
+
   label = input<string>('');
-  options = model<SelectItem<NzSafeAny>[]>([]);
   placeholder = input<string>('Выберите варианты');
   size = input<NzSizeLDSType>('large');
   noColon = input<boolean>(true);

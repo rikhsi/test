@@ -8,6 +8,21 @@ import {
 import { setValidatorsAndUpdate } from '@shared/utils';
 import { VacancyPaymentForm } from '../models';
 
+export function fromLessThanToValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const group = control as FormGroup<VacancyPaymentForm>;
+
+    const from = group.controls.from.value;
+    const to = group.controls.to.value;
+
+    if (to != null && from != null && from >= to) {
+      return { fromGreaterThanTo: true };
+    }
+
+    return null;
+  };
+}
+
 export function paymentDurationValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     const group = control as FormGroup<VacancyPaymentForm>;

@@ -14,6 +14,7 @@ import {
   NzSegmentedItemComponent,
 } from 'ng-zorro-antd/segmented';
 import { VacancyPaymentForm } from '../../models';
+import { PAYMENT_LIST } from '@api/constants/payment';
 
 @Component({
   selector: 'test-vc-payment',
@@ -31,6 +32,8 @@ import { VacancyPaymentForm } from '../../models';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VcPaymentComponent {
+  paymentList = PAYMENT_LIST;
+
   get paymentForm() {
     return <FormGroup<VacancyPaymentForm>>(
       this.fgDirective.form.controls['payment']

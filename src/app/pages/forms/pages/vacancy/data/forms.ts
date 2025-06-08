@@ -6,7 +6,10 @@ import {
   VacancyBaseForm,
   VacancyLanguageForm,
 } from '../models';
-import { paymentDurationValidator } from '../validators';
+import {
+  fromLessThanToValidator,
+  paymentDurationValidator,
+} from '../validators';
 
 export const VACANCY_PAYMENT_FORM = new FormGroup<VacancyPaymentForm>(
   {
@@ -22,7 +25,7 @@ export const VACANCY_PAYMENT_FORM = new FormGroup<VacancyPaymentForm>(
     type: new FormControl(null),
     duration: new FormControl('NONE'),
   },
-  [paymentDurationValidator()]
+  [paymentDurationValidator(), fromLessThanToValidator()]
 );
 
 export const VACANCY_LOCATION_FORM = new FormGroup<LocationBaseForm>({

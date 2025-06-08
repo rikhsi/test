@@ -63,7 +63,6 @@ export class PaymentDurationDirective implements AfterViewInit {
 
         this.paymentForm.reset(
           {
-            currency: 'SUM',
             type: 'MONTH',
             duration: 'NONE',
           },

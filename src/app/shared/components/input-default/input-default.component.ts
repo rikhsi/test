@@ -20,6 +20,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'test-input-default',
@@ -29,6 +30,7 @@ import {
     NzFormLabelComponent,
     NzFormControlComponent,
     FormsModule,
+    NgxMaskDirective,
   ],
   templateUrl: './input-default.component.html',
   styleUrl: './input-default.component.less',
@@ -54,7 +56,9 @@ export class InputDefaultComponent
   placeholder = input<string>('');
   noColon = input<boolean>(true);
   size = input<NzSizeLDSType>('large');
-  type = input<string>('text');
+
+  mask = input<string>(null);
+  separator = input<string>(' ');
 
   validate(control: AbstractControl): ValidationErrors | null {
     return null;

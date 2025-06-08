@@ -11,12 +11,14 @@
     <nz-form-control>
         <input 
             nz-input 
-            [type]="type()"
+            [type]="'text'"
             [placeholder]="placeholder()"
             [nzSize]="size()"
             [disabled]="disabled()"
             [id]="label()" 
             [(ngModel)]="value"
+            [mask]="mask()"
+            [thousandSeparator]="separator()"
             (ngModelChange)="modelChange($event)"
         />
     </nz-form-control>

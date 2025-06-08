@@ -14,6 +14,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideNzConfig } from 'ng-zorro-antd/core/config';
 import { ngZorroConfig } from './nz.config';
 import { progressInterceptor } from '@core/interceptors';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 registerLocaleData(ru);
 
@@ -34,6 +35,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideNzI18n(ru_RU),
     provideNzConfig(ngZorroConfig),
+    provideEnvironmentNgxMask(),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([progressInterceptor])),
   ],

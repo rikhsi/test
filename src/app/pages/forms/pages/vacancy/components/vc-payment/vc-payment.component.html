@@ -20,19 +20,22 @@
             <div class="controls">
                 <div class="money">
                     <test-input-default
+                        mask="separator"
                         placeholder="от"
-                        type="number"
                         formControlName="from"
                     />
     
                     <test-input-default
+                        mask="separator"
                         placeholder="до"
-                        type="number"
                         formControlName="to"
                     />
                 </div>
     
-                <t-select-default formControlName="currency"/>
+                <t-select-default 
+                    [options]="paymentList" 
+                    formControlName="currency"
+                />
             </div>
         </div>
         <label nz-radio [nzValue]="'ONE'">Одно значение</label>
