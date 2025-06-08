@@ -26,9 +26,9 @@
     >
 
     <test-vc-requirements 
-        [experienceList]="requirements.experiences"
-        [workTimeList]="requirements.workTimes"
-        [workTypeList]="requirements.workTypes"
+        [experienceList]="routeData.requirements.experiences"
+        [workTimeList]="routeData.requirements.workTimes"
+        [workTypeList]="routeData.requirements.workTypes"
     />
     </test-box-content>
 
@@ -47,12 +47,16 @@
     <test-box-content 
         [name]="'Языки'"
     >
-        <test-vc-language/>
+        <test-vc-language 
+            [languages]="routeData.languages | fti"
+        />
     </test-box-content>
 
     <test-box-content 
         [name]="'Местоположение'"
     >
-        <test-vc-location [regions]="regions | fti"/>
+        <test-vc-location 
+            [regions]="routeData.regions | fti"
+        />
     </test-box-content>
 </form>

@@ -19,9 +19,9 @@ export enum DistrictApiUrl {
 }
 
 export enum LanguageApiUrl {
-  LIST = 'language.json',
+  LIST = 'languages.json',
 }
 
 export enum LevelApiUrl {
-  LIST = 'level.json',
+  LIST = 'levels.json',
 }

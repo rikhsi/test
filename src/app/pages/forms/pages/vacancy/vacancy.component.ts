@@ -14,11 +14,10 @@ import {
   VcRequirementsComponent,
   VcSkillsComponent,
 } from './components';
-import { VcHandbook, VcRequirement } from './models';
+import { VcHandbook } from './models';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentDurationDirective } from './directives';
 import { FilterToItemPipe } from '@shared/pipes';
-import { FilterItem } from '@api/models';
 
 @Component({
   selector: 'test-vacancy',
@@ -48,9 +47,6 @@ export class VacancyComponent {
   get vacancyForm() {
     return this.vfService.vacancyForm;
   }
-
-  requirements: VcRequirement = this.routeData.requirements;
-  regions: FilterItem[] = this.routeData.regions;
 
   constructor(
     private vfService: VacancyFormService,

@@ -4,7 +4,7 @@ import { RegionService } from '@api/controllers';
 import { FilterItem } from '@api/models';
 
 export const regionResolver: ResolveFn<FilterItem[]> = () => {
-  const vrService = inject(RegionService);
+  const rService = inject(RegionService);
 
-  return vrService.getAll$();
+  return rService.getAll$();
 };

@@ -1,19 +1,26 @@
-<div class="controls">
-    <t-select-default [label]="'Название языка'">
-        @for (language of languages(); track language.id) {
-            <nz-option [nzValue]="language.id">{{language.name}}</nz-option>
+<form [formGroup]="languageForm">
+    <div class="controls">
+        <t-select-default 
+            [label]="'Название языка'"
+            [options]="languages()"
+            formControlName="type"
+        />
+    
+        <t-select-default 
+            [label]="'Уровень владения'"
+            [testLevelByLang]="baseForm"
+            [languages]="languages()"
+            formControlName="level"
+            (push)="onPush($event)"
+        />
+    </div>
+    
+    <div class="chips">
+        @for (chip of options(); track chip.value;) {
+            <test-chip 
+                [name]="chip.label" 
+                (click)="onRemove(chip.value, $index)"
+            />
         }
-    </t-select-default>
-
-    <t-select-default [label]="'Уровень владения'">
-        @for (level of levels(); track level.id) {
-            <nz-option [nzValue]="level.id">{{level.name}}</nz-option>
-        }
-    </t-select-default>
-</div>
-
-<div class="chips">
-    @for (chip of [1,2,3,4,5]; track $index) {
-        <test-chip [name]="'Ташкент'"/>
-    }
-</div>
+    </div>
+</form>

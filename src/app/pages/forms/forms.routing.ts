@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { RouteForms } from '@constants';
 import { requirementResolver } from './pages/vacancy/resolvers/requirement.resolver';
 import { VacancyFormService } from './pages/vacancy/services';
-import { regionResolver } from './pages/vacancy/resolvers';
+import { languageResolver, regionResolver } from './pages/vacancy/resolvers';
 
 export const routes: Route[] = [
   {
@@ -13,7 +13,11 @@ export const routes: Route[] = [
   {
     path: RouteForms.VACANCY,
     providers: [VacancyFormService],
-    resolve: { requirements: requirementResolver, regions: regionResolver },
+    resolve: {
+      requirements: requirementResolver,
+      regions: regionResolver,
+      languages: languageResolver,
+    },
     loadComponent: () =>
       import('./pages/vacancy/vacancy.component').then(
         (c) => c.VacancyComponent

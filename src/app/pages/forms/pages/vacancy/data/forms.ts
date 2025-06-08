@@ -11,6 +11,11 @@ import {
   paymentDurationValidator,
 } from '../validators';
 
+export const LANGUAGE_FORM = new FormGroup<VacancyLanguageForm>({
+  type: new FormControl<number>(null, [Validators.required]),
+  level: new FormControl<number>(null, [Validators.required]),
+});
+
 export const VACANCY_PAYMENT_FORM = new FormGroup<VacancyPaymentForm>(
   {
     from: new FormControl(null, [
