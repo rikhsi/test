@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Нукус",
+    "regionId": 1
+  },
+  {
+    "id": 2,
+    "name": "Ходжейли",
+    "regionId": 1
+  },
+  {
+    "id": 3,
+    "name": "Чимбай",
+    "regionId": 1
+  },
+  {
+    "id": 4,
+    "name": "Муйнак",
+    "regionId": 1
+  },
+  {
+    "id": 5,
+    "name": "Ташкент",
+    "regionId": 2
+  },
+  {
+    "id": 6,
+    "name": "Андижан",
+    "regionId": 2
+  },
+  {
+    "id": 7,
+    "name": "Асака",
+    "regionId": 3
+  },
+  {
+    "id": 8,
+    "name": "Ханабад",
+    "regionId": 3
+  },
+  {
+    "id": 9,
+    "name": "Курартепа",
+    "regionId": 3
+  },
+  {
+    "id": 10,
+    "name": "Бухара",
+    "regionId": 4
+  },
+  {
+    "id": 11,
+    "name": "Гиждуван",
+    "regionId": 4
+  },
+  {
+    "id": 12,
+    "name": "Каракуль",
+    "regionId": 4
+  },
+  {
+    "id": 13,
+    "name": "Фергана",
+    "regionId": 5
+  },
+  {
+    "id": 14,
+    "name": "Маргилан",
+    "regionId": 5
+  },
+  {
+    "id": 15,
+    "name": "Коканд",
+    "regionId": 5
+  },
+  {
+    "id": 16,
+    "name": "Джизак",
+    "regionId": 6
+  },
+  {
+    "id": 17,
+    "name": "Дустлик",
+    "regionId": 6
+  },
+  {
+    "id": 18,
+    "name": "Галлаарал",
+    "regionId": 6
+  },
+  {
+    "id": 19,
+    "name": "Наманган",
+    "regionId": 7
+  },
+  {
+    "id": 20,
+    "name": "Чартак",
+    "regionId": 7
+  },
+  {
+    "id": 21,
+    "name": "Учкурган",
+    "regionId": 7
+  },
+  {
+    "id": 22,
+    "name": "Навои",
+    "regionId": 8
+  },
+  {
+    "id": 23,
+    "name": "Зарафшан",
+    "regionId": 8
+  },
+  {
+    "id": 24,
+    "name": "Учкудук",
+    "regionId": 8
+  }
+]

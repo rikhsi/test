@@ -3,6 +3,7 @@ import {
   Component,
   forwardRef,
   input,
+  model,
 } from '@angular/core';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -36,7 +37,7 @@ import { SelectItem } from '@typings';
   ],
 })
 export class SelectDefaultComponent extends ControlBaseDirective<NzSafeAny> {
-  options = input<SelectItem<NzSafeAny>[]>([]);
+  options = model<SelectItem<NzSafeAny>[]>([]);
 
   label = input<string>('');
   placeholder = input<string>('Выберите варианты');

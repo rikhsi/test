@@ -17,6 +17,8 @@ import {
 import { VcHandbook, VcRequirement } from './models';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentDurationDirective } from './directives';
+import { FilterToItemPipe } from '@shared/pipes';
+import { FilterItem } from '@api/models';
 
 @Component({
   selector: 'test-vacancy',
@@ -32,6 +34,7 @@ import { PaymentDurationDirective } from './directives';
     TextareaComponent,
     ReactiveFormsModule,
     PaymentDurationDirective,
+    FilterToItemPipe,
   ],
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
@@ -47,6 +50,7 @@ export class VacancyComponent {
   }
 
   requirements: VcRequirement = this.routeData.requirements;
+  regions: FilterItem[] = this.routeData.regions;
 
   constructor(
     private vfService: VacancyFormService,

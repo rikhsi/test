@@ -13,3 +13,8 @@ export interface ConfirmModal extends BaseModal {
   cancel: ModalButtonBase;
   submit: ModalButtonBase;
 }
+
+export interface MMapResult {
+  coords: [number, number];
+  address: string;
+}

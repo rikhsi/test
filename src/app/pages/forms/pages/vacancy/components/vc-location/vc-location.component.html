@@ -1,32 +1,36 @@
-<div class="places">
-    <t-select-default [label]="'Рабочая область'">
-        @for (region of regions(); track region.id) {
-            <nz-option [nzValue]="region.id">{{region.name}}</nz-option>
-        }
-    </t-select-default>
+<form [formGroup]="locationForm">
+    <div class="places">
+        <t-select-default 
+            [label]="'Рабочая область'"
+            [options]="regions()"
+            formControlName="region"
+        />
 
-    <t-select-default [label]="'Город работы (район)'">
-        @for (district of discricts(); track district.id) {
-            <nz-option [nzValue]="district.id">{{district.name}}</nz-option>
-        }
-    </t-select-default>
-</div>
-
-<div class="address">
-    <test-input-default
-        [label]="'Адрес организации'"
-        [placeholder]="'Улица и номер дома'"
-    />
+        <t-select-default 
+            testDistrictByRegion
+            [label]="'Город работы (район)'" 
+            [options]="discricts()"
+            formControlName="district"
+        />
+    </div>
     
-    <a 
-        nz-button
-        nzType="link"
-        nzSize="large"
-        class="link"
-        (click)="openMap()"
-    >
-        Указать на карте
-
-        <span nz-icon nzType="right"></span>
-    </a>
-</div>
+    <div class="address">
+        <test-input-default
+            [label]="'Адрес организации'"
+            [placeholder]="'Улица и номер дома'"
+            formControlName="address"
+        />
+        
+        <a 
+            nz-button
+            nzType="link"
+            nzSize="large"
+            class="link"
+            (click)="openMap()"
+        >
+            Указать на карте
+    
+            <span nz-icon nzType="right"></span>
+        </a>
+    </div>
+</form>

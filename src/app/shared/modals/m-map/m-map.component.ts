@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { InputMapComponent } from '@shared/components';
+import { MMapResult } from '@typings';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
@@ -18,19 +19,24 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MMapComponent {
-  readonly coordsControl = new FormControl<number[]>([]);
+  inputMapComponent = viewChild(InputMapComponent);
 
-  constructor(private drawerRef: NzDrawerRef<number[], number[]>) {}
+  readonly coordsControl = new FormControl<[number, number]>(null);
+
+  constructor(private drawerRef: NzDrawerRef<number[], MMapResult>) {}
 
   cancel(): void {
     this.drawerRef.close();
   }
 
   reset(): void {
-    this.coordsControl.reset([]);
+    this.coordsControl.reset(null);
   }
 
   submit(): void {
-    this.drawerRef.close(this.coordsControl.value);
+    this.drawerRef.close({
+      coords: this.coordsControl.value,
+      address: this.inputMapComponent().address(),
+    });
   }
 }

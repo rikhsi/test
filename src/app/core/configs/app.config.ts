@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  provideZoneChangeDetection,
+} from '@angular/core';
 import {
   provideRouter,
   withInMemoryScrolling,
@@ -15,6 +19,8 @@ import { provideNzConfig } from 'ng-zorro-antd/core/config';
 import { ngZorroConfig } from './nz.config';
 import { progressInterceptor } from '@core/interceptors';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import { apiInterceptor } from '@core/interceptors/api.interceptor';
+import { AngularYandexMapsModule } from 'angular8-yandex-maps';
 
 registerLocaleData(ru);
 
@@ -37,6 +43,12 @@ export const appConfig: ApplicationConfig = {
     provideNzConfig(ngZorroConfig),
     provideEnvironmentNgxMask(),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptors([progressInterceptor])),
+    provideHttpClient(withInterceptors([progressInterceptor, apiInterceptor])),
+    importProvidersFrom(
+      AngularYandexMapsModule.forRoot({
+        apikey: 'd306c0df-8591-4784-ae3e-23323936fbd4',
+        lang: 'ru_RU',
+      })
+    ),
   ],
 };
