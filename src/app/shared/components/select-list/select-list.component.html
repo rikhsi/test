@@ -30,8 +30,8 @@
 <nz-dropdown-menu #menu="nzDropdownMenu">
     <cdk-virtual-scroll-viewport
         [itemSize]="45"
-        [maxBufferPx]="400"
-        [minBufferPx]="200"
+        [maxBufferPx]="1000"
+        [minBufferPx]="440"
         (scrolledIndexChange)="onScroll($event)"
         class="viewport"
     >
@@ -40,11 +40,15 @@
                 [ngClass]="{
                     active: (value() ?? []).includes(option.value)
                 }" 
-                (click)="modelChange([option.value])"
+                (click)="onModelChange(option)"
                 class="item"
             >
                 {{option.label}}
             </div>
         </ng-container>
+
+        @if (isLoading()) {
+            <t-loading class="loading"/>
+        }
     </cdk-virtual-scroll-viewport>
 </nz-dropdown-menu>

@@ -15,7 +15,9 @@
         <t-select-list 
             [options]="jobList()"
             formControlName="job"
+            [isLoading]="isJobLoading()"
             (searched)="search$.next($event)"
+            (loadMore)="search$.next($event)"
         />
     </test-box-content>
 

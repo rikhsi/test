@@ -5,3 +5,4 @@ export * from './select-default/select-default.component';
 export * from './textarea/textarea.component';
 export * from './input-map/input-map.component';
 export * from './chip/chip.component';
+export * from './loading/loading.component';

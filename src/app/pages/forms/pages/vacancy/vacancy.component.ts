@@ -52,6 +52,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class VacancyComponent implements OnInit {
   jobList = computed(() => this.vjService.options());
+  isJobLoading = computed(() => this.vjService.isLoading());
 
   get routeData() {
     return <VcHandbook>this.route.snapshot.data;

@@ -9,6 +9,7 @@ import { debounceTime, Observable, Subject, switchMap, tap } from 'rxjs';
 export class VacancyJobService extends JobService {
   readonly page = signal<number>(1);
   readonly size = signal<number>(20);
+  readonly isLoading = signal<boolean>(false);
 
   readonly search$ = new Subject<string>();
 
@@ -16,13 +17,15 @@ export class VacancyJobService extends JobService {
 
   initSearch$(): Observable<FilterItem[]> {
     return this.search$.pipe(
-      debounceTime(300),
+      tap(() => this.isLoading.set(true)),
+      debounceTime(1000),
       switchMap((value) =>
         this.getByPagination$(this.size(), this.page(), value)
       ),
       tap((options) => {
         this.options.set(filterToSelect(options));
         this.size.update((current) => current + 20);
+        this.isLoading.set(false);
       })
     );
   }
