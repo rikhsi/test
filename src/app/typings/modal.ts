@@ -15,6 +15,6 @@ export interface ConfirmModal extends BaseModal {
 }
 
 export interface MMapResult {
-  coords: [number, number];
+  coords: number[];
   address: string;
 }

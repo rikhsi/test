@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+  viewChild,
+} from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { InputMapComponent } from '@shared/components';
 import { MMapResult } from '@typings';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzDrawerRef } from 'ng-zorro-antd/drawer';
+import { NZ_DRAWER_DATA, NzDrawerRef } from 'ng-zorro-antd/drawer';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
@@ -18,19 +24,28 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
   styleUrl: './m-map.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MMapComponent {
+export class MMapComponent implements OnInit {
   inputMapComponent = viewChild(InputMapComponent);
 
-  readonly coordsControl = new FormControl<[number, number]>(null);
+  readonly coordsControl = new FormControl<number[]>(null);
 
-  constructor(private drawerRef: NzDrawerRef<number[], MMapResult>) {}
+  constructor(
+    private drawerRef: NzDrawerRef<number[], MMapResult>,
+    @Inject(NZ_DRAWER_DATA) private initialState: number[]
+  ) {}
+
+  ngOnInit(): void {
+    this.coordsControl.setValue(this.initialState ?? []);
+  }
 
   cancel(): void {
     this.drawerRef.close();
   }
 
   reset(): void {
-    this.coordsControl.reset(null);
+    this.coordsControl.reset([]);
+
+    this.cancel();
   }
 
   submit(): void {

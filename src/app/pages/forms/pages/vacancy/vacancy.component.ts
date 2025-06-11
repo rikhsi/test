@@ -10,12 +10,17 @@ import {
   InputDefaultComponent,
   TextareaComponent,
 } from '@shared/components';
-import { VacancyFormService, VacancyJobService } from './services';
+import {
+  VacancyFormService,
+  VacancyJobService,
+  VacancySkillsService,
+} from './services';
 import { ActivatedRoute } from '@angular/router';
 import {
   VcLanguageComponent,
   VcLocationComponent,
   VcPaymentComponent,
+  VcPositionComponent,
   VcRequirementsComponent,
   VcSkillsComponent,
 } from './components';
@@ -23,10 +28,6 @@ import { VcHandbook } from './models';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentDurationDirective } from './directives';
 import { FilterToItemPipe } from '@shared/pipes';
-import {
-  SelectListComponent,
-  SelectListService,
-} from '@shared/components/select-list';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -43,16 +44,19 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ReactiveFormsModule,
     PaymentDurationDirective,
     FilterToItemPipe,
-    SelectListComponent,
+    VcPositionComponent,
   ],
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [SelectListService, VacancyJobService],
+  providers: [VacancyJobService, VacancySkillsService],
 })
 export class VacancyComponent implements OnInit {
   jobList = computed(() => this.vjService.options());
+  skillsList = computed(() => this.vsService.options());
+
   isJobLoading = computed(() => this.vjService.isLoading());
+  isSkillsLoading = computed(() => this.vsService.isLoading());
 
   get routeData() {
     return <VcHandbook>this.route.snapshot.data;
@@ -62,19 +66,25 @@ export class VacancyComponent implements OnInit {
     return this.vfService.vacancyForm;
   }
 
-  get search$() {
+  get jobSearch$() {
     return this.vjService.search$;
+  }
+
+  get skillsSearch$() {
+    return this.vsService.search$;
   }
 
   constructor(
     private vfService: VacancyFormService,
     private route: ActivatedRoute,
     private vjService: VacancyJobService,
+    private vsService: VacancySkillsService,
     private destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
     this.initJobs();
+    this.initSkills();
   }
 
   private initJobs(): void {
@@ -83,6 +93,15 @@ export class VacancyComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
 
-    this.search$.next(null);
+    this.jobSearch$.next(null);
+  }
+
+  private initSkills(): void {
+    this.vsService
+      .initSearch$()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+
+    this.skillsSearch$.next(null);
   }
 }

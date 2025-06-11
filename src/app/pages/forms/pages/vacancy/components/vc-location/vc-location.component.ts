@@ -53,7 +53,7 @@ export class VcLocationComponent {
         nzClosable: false,
         nzPlacement: 'bottom',
         nzContent: MMapComponent,
-        nzData: [],
+        nzData: this.locationForm.controls.coords.value,
         nzWidth: '100vw',
         nzHeight: '80svh',
         nzWrapClassName: 'bottom-drawer',

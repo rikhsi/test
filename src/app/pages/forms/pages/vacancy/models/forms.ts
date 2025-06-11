@@ -22,6 +22,7 @@ export type VacancyLanguageForm = {
 export type VacancyBaseForm = {
   title: FormControl<string>;
   job: FormControl<number[]>;
+  skills: FormControl<number[]>;
   payment: FormGroup<VacancyPaymentForm>;
   workExperience: FormControl<number>;
   workType: FormControl<number>;

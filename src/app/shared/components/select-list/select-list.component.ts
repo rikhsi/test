@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   DestroyRef,
   forwardRef,
   input,
@@ -57,6 +58,7 @@ import { LoadingComponent } from '../loading/loading.component';
       useExisting: forwardRef(() => SelectListComponent),
       multi: true,
     },
+    SelectListService,
   ],
 })
 export class SelectListComponent
@@ -74,6 +76,8 @@ export class SelectListComponent
   isLoading = input<boolean>();
 
   isDropdown = signal<boolean>(false);
+
+  selectedOptions = computed(() => this.slService.selectedOptions());
 
   searched = output<string>();
   loadMore = output<string>();
@@ -120,7 +124,7 @@ export class SelectListComponent
 
     if (this.mode() === 'default') {
       this.value.set([value]);
-      this.searchControl.setValue(label, { emitEvent: false });
+      this.slService.selectedOptions.set([{ value, label }]);
     } else {
       const isAlreadyHas = currentValue.includes(value);
 
@@ -128,13 +132,24 @@ export class SelectListComponent
         this.value.update((current) =>
           current.filter((item) => item !== value)
         );
+
+        this.slService.selectedOptions.update((currentList) =>
+          currentList.filter((item) => item.value !== value)
+        );
       } else {
         this.value.update((current) => {
           current.push(value);
           return current;
         });
+
+        this.slService.selectedOptions.update((currentList) => [
+          ...currentList,
+          { value, label },
+        ]);
       }
     }
+
+    this.modelChange(this.value());
   }
 
   override setDisabledState(isDisabled: boolean): void {

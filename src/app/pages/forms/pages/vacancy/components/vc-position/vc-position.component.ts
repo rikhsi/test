@@ -7,24 +7,23 @@ import {
   viewChild,
 } from '@angular/core';
 import {
-  ControlContainer,
   FormGroup,
+  ControlContainer,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ChipComponent } from '@shared/components';
 import { SelectListComponent } from '@shared/components/select-list';
 import { SelectItem } from '@typings';
 import { VacancyBaseForm } from '../../models';
+import { ChipComponent } from '@shared/components';
 
 @Component({
-  selector: 'test-vc-skills',
+  selector: 'test-vc-position',
   imports: [SelectListComponent, ChipComponent, ReactiveFormsModule],
-  templateUrl: './vc-skills.component.html',
-  styleUrl: './vc-skills.component.less',
+  templateUrl: './vc-position.component.html',
+  styleUrl: './vc-position.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  viewProviders: [],
 })
-export class VcSkillsComponent {
+export class VcPositionComponent {
   selectListRef = viewChild(SelectListComponent);
 
   selectedItems = input<SelectItem[]>([]);
@@ -40,8 +39,8 @@ export class VcSkillsComponent {
     return <FormGroup<VacancyBaseForm>>this.controlContainer.control;
   }
 
-  get skillsControl() {
-    return this.baseForm.controls.skills;
+  get jobControl() {
+    return this.baseForm.controls.job;
   }
 
   constructor(private controlContainer: ControlContainer) {}

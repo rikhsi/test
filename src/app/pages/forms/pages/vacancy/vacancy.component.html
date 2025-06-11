@@ -12,12 +12,11 @@
     <test-box-content 
         [name]="'Должность сотрудника'"
     >
-        <t-select-list 
+        <test-vc-position 
             [options]="jobList()"
-            formControlName="job"
             [isLoading]="isJobLoading()"
-            (searched)="search$.next($event)"
-            (loadMore)="search$.next($event)"
+            (loadMore)="jobSearch$.next($event)"
+            (searched)="jobSearch$.next($event)"
         />
     </test-box-content>
 
@@ -47,7 +46,12 @@
     <test-box-content 
         [name]="'Требуемые навыки'"
     >
-        <test-vc-skills/>
+        <test-vc-skills 
+            [options]="skillsList()"
+            [isLoading]="isSkillsLoading()"
+            (loadMore)="skillsSearch$.next($event)"
+            (searched)="skillsSearch$.next($event)"
+        />
     </test-box-content>
 
     <test-box-content 

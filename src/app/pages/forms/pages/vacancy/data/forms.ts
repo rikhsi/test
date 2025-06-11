@@ -53,6 +53,7 @@ export const VACANCY_FORM = new FormGroup<VacancyBaseForm>({
     Validators.maxLength(50),
   ]),
   job: new FormControl([], [Validators.required]),
+  skills: new FormControl([], [Validators.required]),
   payment: VACANCY_PAYMENT_FORM,
   workExperience: new FormControl(null, [Validators.required]),
   workType: new FormControl(null, [Validators.required]),

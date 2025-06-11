@@ -1,8 +1,7 @@
 <t-select-list 
     [options]="options()"
     [isLoading]="isLoading()"
-    [formControl]="skillsControl"
-    [mode]="'multiple'"
+    [formControl]="jobControl"
     (searched)="searched.emit($event)"
     (loadMore)="loadMore.emit($event)"
 />
