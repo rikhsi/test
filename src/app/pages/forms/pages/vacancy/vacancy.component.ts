@@ -1,16 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  OnInit,
+} from '@angular/core';
 import {
   BoxContentComponent,
   InputDefaultComponent,
   TextareaComponent,
 } from '@shared/components';
-import { VacancyFormService } from './services';
+import { VacancyFormService, VacancyJobService } from './services';
 import { ActivatedRoute } from '@angular/router';
 import {
   VcLanguageComponent,
   VcLocationComponent,
   VcPaymentComponent,
-  VcPositionComponent,
   VcRequirementsComponent,
   VcSkillsComponent,
 } from './components';
@@ -18,6 +23,11 @@ import { VcHandbook } from './models';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentDurationDirective } from './directives';
 import { FilterToItemPipe } from '@shared/pipes';
+import {
+  SelectListComponent,
+  SelectListService,
+} from '@shared/components/select-list';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'test-vacancy',
@@ -26,7 +36,6 @@ import { FilterToItemPipe } from '@shared/pipes';
     VcLanguageComponent,
     VcLocationComponent,
     VcPaymentComponent,
-    VcPositionComponent,
     VcRequirementsComponent,
     VcSkillsComponent,
     InputDefaultComponent,
@@ -34,12 +43,16 @@ import { FilterToItemPipe } from '@shared/pipes';
     ReactiveFormsModule,
     PaymentDurationDirective,
     FilterToItemPipe,
+    SelectListComponent,
   ],
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [SelectListService, VacancyJobService],
 })
-export class VacancyComponent {
+export class VacancyComponent implements OnInit {
+  jobList = computed(() => this.vjService.options());
+
   get routeData() {
     return <VcHandbook>this.route.snapshot.data;
   }
@@ -48,8 +61,27 @@ export class VacancyComponent {
     return this.vfService.vacancyForm;
   }
 
+  get search$() {
+    return this.vjService.search$;
+  }
+
   constructor(
     private vfService: VacancyFormService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private vjService: VacancyJobService,
+    private destroyRef: DestroyRef
   ) {}
+
+  ngOnInit(): void {
+    this.initJobs();
+  }
+
+  private initJobs(): void {
+    this.vjService
+      .initSearch$()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+
+    this.search$.next(null);
+  }
 }

@@ -25,3 +25,7 @@ export enum LanguageApiUrl {
 export enum LevelApiUrl {
   LIST = 'levels.json',
 }
+
+export enum JobApiUrl {
+  LIST = 'jobs.json',
+}

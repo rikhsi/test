@@ -4,15 +4,11 @@ import {
   DestroyRef,
   forwardRef,
   input,
-  model,
-  OnInit,
   output,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import {
-  ControlValueAccessor,
-  FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
@@ -21,118 +17,80 @@ import {
   CdkVirtualScrollViewport,
   ScrollingModule,
 } from '@angular/cdk/scrolling';
-import { FunctionType, SelectItem } from '@app/typings';
+import { SelectItem } from '@app/typings';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { skip } from 'rxjs';
+import { skip, timer } from 'rxjs';
+import { NzSizeLDSType } from 'ng-zorro-antd/core/types';
+import { NzInputDirective } from 'ng-zorro-antd/input';
+import { ControlBaseDirective } from '@shared/directives';
+import {
+  NzFormControlComponent,
+  NzFormItemComponent,
+  NzFormLabelComponent,
+} from 'ng-zorro-antd/form';
 import { SelectListService } from './select-list.service';
-import { NzSizeDSType } from 'ng-zorro-antd/core/types';
 import { NgClass } from '@angular/common';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSelectModeType } from 'ng-zorro-antd/select';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'iz-select-list',
-    imports: [
-        CdkVirtualScrollViewport,
-        FormsModule,
-        NzDropDownModule,
-        ScrollingModule,
-        ReactiveFormsModule,
-        NgClass,
-        NzInputModule,
-    ],
-    templateUrl: './select-list.component.html',
-    styleUrl: './select-list.component.less',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SelectListComponent),
-            multi: true,
-        },
-    ]
+  selector: 't-select-list',
+  imports: [
+    CdkVirtualScrollViewport,
+    FormsModule,
+    NzDropDownModule,
+    ScrollingModule,
+    ReactiveFormsModule,
+    NzInputDirective,
+    NzFormItemComponent,
+    NzFormLabelComponent,
+    NzFormControlComponent,
+    NgClass,
+  ],
+  templateUrl: './select-list.component.html',
+  styleUrl: './select-list.component.less',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectListComponent),
+      multi: true,
+    },
+  ],
 })
 export class SelectListComponent
-  implements ControlValueAccessor, OnInit, AfterViewInit
+  extends ControlBaseDirective<number[]>
+  implements AfterViewInit
 {
-  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
+  viewport = viewChild(CdkVirtualScrollViewport);
 
   options = input<SelectItem[]>();
-  value = model<number>();
-  searchValue = signal<string>(null);
+  placeholder = input<string>('');
+  noColon = input<boolean>();
+  label = input<string>();
+  size = input<NzSizeLDSType>('large');
+  mode = input<NzSelectModeType>('default');
 
-  disabled = model<boolean>(false, { alias: 'blocked' });
-
-  placeholder = input<string>();
-  searched = output<string>();
-  loadMore = output<string>();
   isDropdown = signal<boolean>(false);
 
-  pageIndex = model<number>(0);
-  pageSize = model<number>(1000);
+  searched = output<string>();
+  loadMore = output<void>();
 
-  size = input<NzSizeDSType>('default');
-  isBorderLight = input<boolean>();
-
-  private scrollIndex = 0;
-
-  get searchControl(): FormControl<string> {
+  get searchControl() {
     return this.slService.searchControl;
   }
 
   constructor(
-    private destroyRef: DestroyRef,
-    private slService: SelectListService
-  ) {}
-
-  onChange: FunctionType<number> = () => {};
-  onTouched: FunctionType<number> = () => {};
-
-  ngOnInit(): void {
-    this.initSearch();
+    private slService: SelectListService,
+    private destroyRef: DestroyRef
+  ) {
+    super();
   }
 
   ngAfterViewInit(): void {
-    this.viewport.scrolledIndexChange
-      .pipe(skip(2), takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        const viewport = this.viewport;
-        const totalContentSize = viewport.measureRenderedContentSize();
-        const scrollOffset = viewport.measureScrollOffset('top');
-        const viewportSize = viewport.getViewportSize();
-
-        if (scrollOffset + viewportSize >= totalContentSize) {
-          // this.loadMore.emit(this.searchValue());
-          // this.pageIndex.update((i) => i + 1);
-        }
-      });
+    this.listenToScrolled();
   }
 
-  writeValue(value: number): void {
-    this.value.set(value);
-
-    if (value === null) {
-      this.searchControl.setValue(null);
-    }
-  }
-
-  registerOnChange(fn: FunctionType<number>): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: FunctionType<number>): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(state: boolean): void {
-    this.disabled.set(state);
-  }
-
-  onModelChange(option: SelectItem): void {
-    this.value.set(option.value);
-    this.slService.selectedItemValue.set(option);
-    this.onChange(option.value);
-    this.searchControl.setValue(option.label, { emitEvent: false });
-  }
+  private scrollIndex = 0;
 
   onScroll(index: number): void {
     this.scrollIndex = index;
@@ -141,22 +99,58 @@ export class SelectListComponent
   open(): void {
     this.isDropdown.set(true);
 
-    setTimeout(() => {
-      if (this.viewport) {
-        this.viewport.scrollToIndex(this.scrollIndex, 'smooth');
-      }
-    }, 200);
+    timer(50).subscribe(() => {
+      this.viewport().scrollToIndex(this.scrollIndex, 'smooth');
+    });
   }
 
-  private initSearch(): void {
-    this.searchControl.valueChanges
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (value) => {
-          this.pageIndex.set(0);
-          this.searchValue.set(value);
-          this.searched.emit(value);
-        },
+  blur(): void {
+    this.isDropdown.set(false);
+  }
+
+  override setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+
+    if (isDisabled) {
+      this.searchControl.disable({ emitEvent: false });
+    } else {
+      this.searchControl.enable({ emitEvent: false });
+    }
+  }
+
+  override modelChange([optionId]: number[]): void {
+    const currentValue = this.value();
+
+    if (this.mode() === 'default') {
+      this.value.set([optionId]);
+    } else {
+      const isAlreadyHas = currentValue.includes(optionId);
+
+      if (isAlreadyHas) {
+        this.value.update((current) =>
+          current.filter((item) => item !== optionId)
+        );
+      } else {
+        this.value.update((current) => {
+          current.push(optionId);
+          return current;
+        });
+      }
+    }
+  }
+
+  private listenToScrolled(): void {
+    this.viewport()
+      .scrolledIndexChange.pipe(skip(1), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        const totalContentSize = this.viewport().measureRenderedContentSize();
+        const scrollOffset = this.viewport().measureScrollOffset('top');
+        const viewportSize = this.viewport().getViewportSize();
+
+        if (scrollOffset + viewportSize >= totalContentSize) {
+          console.log(1);
+          this.loadMore.emit();
+        }
       });
   }
 }

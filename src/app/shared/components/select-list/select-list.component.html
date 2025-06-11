@@ -1,39 +1,50 @@
-<input
-    nz-input
-    nzSize="large"
-    nz-dropdown
-    [(nzVisible)]="isDropdown"
-    [nzDropdownMenu]="menu"
-    [nzTrigger]="null"
-    [formControl]="searchControl"
-    [placeholder]="placeholder()"
-    [nzDisabled]="disabled()"
-    (focus)="open()"
-    (blur)="isDropdown.set(false)"
-    class="select-list"
-    [ngClass]="{
-        light: isBorderLight(),
-        small: size() === 'small'
-    }"
-/>
+<nz-form-item>
+    @if (label(); as label) {
+        <nz-form-label 
+            [nzFor]="label"
+            [nzNoColon]="noColon()"
+        >
+            {{label}}
+        </nz-form-label>
+    }
+
+    <nz-form-control>
+        <input 
+            nz-input 
+            [type]="'text'"
+            [placeholder]="placeholder()"
+            [nzSize]="size()"
+            [id]="label()" 
+            nz-dropdown
+            [(nzVisible)]="isDropdown"
+            [nzDropdownMenu]="menu"
+            [nzTrigger]="null"
+            [nzDisabled]="disabled()"
+            [nzOverlayClassName]="'custom-dropdown'"
+            [formControl]="searchControl"
+            (focus)="open()"
+        />
+    </nz-form-control>
+</nz-form-item>
 
 <nz-dropdown-menu #menu="nzDropdownMenu">
-    <ul nz-menu>
-        <cdk-virtual-scroll-viewport
-            [itemSize]="47"
-            [maxBufferPx]="1000"
-            [minBufferPx]="450"
-            (scrolledIndexChange)="onScroll($event)"
-        >
-            <ng-container *cdkVirtualFor="let option of options()">
-                <li 
-                    nz-menu-item 
-                    [nzSelected]="option.value === value()" 
-                    (click)="onModelChange(option)"
-                >
-                    {{ option.label }}
-                </li>
-            </ng-container>
-        </cdk-virtual-scroll-viewport>
-    </ul>
+    <cdk-virtual-scroll-viewport
+        [itemSize]="45"
+        [maxBufferPx]="400"
+        [minBufferPx]="200"
+        (scrolledIndexChange)="onScroll($event)"
+        class="viewport"
+    >
+        <ng-container *cdkVirtualFor="let option of options()">
+            <div 
+                [ngClass]="{
+                    active: (value() ?? []).includes(option.value)
+                }" 
+                (click)="modelChange([option.value])"
+                class="item"
+            >
+                {{option.label}}
+            </div>
+        </ng-container>
+    </cdk-virtual-scroll-viewport>
 </nz-dropdown-menu>
