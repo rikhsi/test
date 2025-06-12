@@ -1,11 +1,18 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   forwardRef,
   input,
   model,
 } from '@angular/core';
-import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  AbstractControl,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 import {
   NzFormControlComponent,
   NzFormItemComponent,
@@ -36,11 +43,24 @@ import { SelectItem } from '@typings';
     },
   ],
 })
-export class SelectDefaultComponent extends ControlBaseDirective<NzSafeAny> {
+export class SelectDefaultComponent
+  extends ControlBaseDirective<NzSafeAny>
+  implements Validator, AfterViewInit
+{
   options = model<SelectItem<NzSafeAny>[]>([]);
 
   label = input<string>('');
   placeholder = input<string>('Выберите варианты');
   size = input<NzSizeLDSType>('large');
   noColon = input<boolean>(true);
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    this.validate$.next(control);
+
+    return null;
+  }
+
+  ngAfterViewInit(): void {
+    this.initValidation();
+  }
 }

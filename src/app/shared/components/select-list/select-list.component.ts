@@ -1,8 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  computed,
-  DestroyRef,
   forwardRef,
   input,
   output,
@@ -10,9 +8,13 @@ import {
   viewChild,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormsModule,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
+  ValidationErrors,
+  Validator,
 } from '@angular/forms';
 import {
   CdkVirtualScrollViewport,
@@ -58,12 +60,17 @@ import { LoadingComponent } from '../loading/loading.component';
       useExisting: forwardRef(() => SelectListComponent),
       multi: true,
     },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => SelectListComponent),
+      multi: true,
+    },
     SelectListService,
   ],
 })
 export class SelectListComponent
   extends ControlBaseDirective<number[]>
-  implements AfterViewInit
+  implements AfterViewInit, Validator
 {
   viewport = viewChild(CdkVirtualScrollViewport);
 
@@ -77,9 +84,8 @@ export class SelectListComponent
 
   isDropdown = signal<boolean>(false);
 
-  selectedOptions = computed(() => this.slService.selectedOptions());
-
   searched = output<string>();
+  selected = output<number>();
   loadMore = output<string>();
 
   get searchControl() {
@@ -88,16 +94,20 @@ export class SelectListComponent
 
   private previousScrollOffset = 0;
 
-  constructor(
-    private slService: SelectListService,
-    private destroyRef: DestroyRef
-  ) {
+  constructor(private slService: SelectListService) {
     super();
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    this.validate$.next(control);
+
+    return null;
   }
 
   ngAfterViewInit(): void {
     this.listenToScrolled();
     this.initSearch();
+    this.initValidation();
   }
 
   private scrollIndex = 0;
@@ -119,34 +129,21 @@ export class SelectListComponent
     this.isDropdown.set(false);
   }
 
-  onModelChange({ value, label }: SelectItem): void {
-    const currentValue = this.value();
+  onModelChange({ value }: SelectItem): void {
+    const alreadyHas = this.value()?.includes(value);
 
     if (this.mode() === 'default') {
       this.value.set([value]);
-      this.slService.selectedOptions.set([{ value, label }]);
     } else {
-      const isAlreadyHas = currentValue.includes(value);
+      this.value.update((current) => {
+        current.push(value);
 
-      if (isAlreadyHas) {
-        this.value.update((current) =>
-          current.filter((item) => item !== value)
-        );
+        return current;
+      });
+    }
 
-        this.slService.selectedOptions.update((currentList) =>
-          currentList.filter((item) => item.value !== value)
-        );
-      } else {
-        this.value.update((current) => {
-          current.push(value);
-          return current;
-        });
-
-        this.slService.selectedOptions.update((currentList) => [
-          ...currentList,
-          { value, label },
-        ]);
-      }
+    if (!alreadyHas) {
+      this.selected.emit(value);
     }
 
     this.modelChange(this.value());

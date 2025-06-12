@@ -41,9 +41,6 @@ export class InputMapComponent extends ControlBaseDirective<number[]> {
   isReady = signal<boolean>(false);
   map = signal<ymaps.Map>(null);
   label = input<string>('');
-  required = input<boolean>();
-  status = signal<string>('');
-  message = signal<string>(null);
 
   onMapInit({ target }: YaReadyEvent<ymaps.Map>): void {
     target.controls.remove('zoomControl');

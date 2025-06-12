@@ -10,10 +10,23 @@ export class VacancyJobService extends JobService {
   readonly page = signal<number>(1);
   readonly size = signal<number>(20);
   readonly isLoading = signal<boolean>(false);
+  readonly selectedOptions = signal<SelectItem[]>([]);
 
   readonly search$ = new Subject<string>();
 
   readonly options = signal<SelectItem[]>([]);
+
+  onSelect(id: number): void {
+    const findedItem = this.options().find((item) => item.value === id);
+
+    this.selectedOptions.update((current) => [...current, findedItem]);
+  }
+
+  onRemove(id: number): void {
+    this.selectedOptions.update((current) =>
+      current.filter((item) => item.value !== id)
+    );
+  }
 
   initSearch$(): Observable<FilterItem[]> {
     return this.search$.pipe(

@@ -2,6 +2,7 @@
     [options]="options()"
     [isLoading]="isLoading()"
     [formControl]="jobControl"
+    (selected)="added.emit($event)"
     (searched)="searched.emit($event)"
     (loadMore)="loadMore.emit($event)"
 />
@@ -10,6 +11,7 @@
     @for (chip of selectedOptions(); track chip.value;) {
         <test-chip 
             [name]="chip.label" 
+            (click)="onReset()"
         />
     }
 </div>

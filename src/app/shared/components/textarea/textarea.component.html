@@ -3,12 +3,19 @@
         <nz-form-label 
             [nzFor]="label"
             [nzNoColon]="noColon()"
+            [nzRequired]="required()"
         >
             {{label}}
         </nz-form-label>
     }
 
-    <nz-form-control>
+    <nz-form-control
+        [nzValidateStatus]="status()"
+        [nzSuccessTip]="message()"
+        [nzErrorTip]="message()"
+        [nzWarningTip]="message()"
+        [nzValidatingTip]="message()"
+    >
         <textarea 
             nz-input 
             [placeholder]="placeholder()"

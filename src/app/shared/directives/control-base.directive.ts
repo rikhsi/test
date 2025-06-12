@@ -1,11 +1,24 @@
-import { Directive, model } from '@angular/core';
+import { DestroyRef, Directive, inject, model, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor } from '@angular/forms';
-import { FunctionType } from '@typings';
+import { ValidationService } from '@core/services';
+import { ControlType, FunctionType } from '@typings';
+import { NzValidateStatus } from 'ng-zorro-antd/core/types';
+import { debounceTime, Subject } from 'rxjs';
 
 @Directive()
 export abstract class ControlBaseDirective<T> implements ControlValueAccessor {
   value = model<T>();
   disabled = model<boolean>(false, { alias: 'blocked' });
+
+  validate$ = new Subject<ControlType>();
+
+  message = signal<string>(null);
+  status = signal<NzValidateStatus>('');
+  required = signal<boolean>(false);
+
+  protected validationService = inject(ValidationService);
+  protected destroyRef = inject(DestroyRef);
 
   public onChange: FunctionType<T>;
   public onTouched: FunctionType<T>;
@@ -33,5 +46,14 @@ export abstract class ControlBaseDirective<T> implements ControlValueAccessor {
 
   markAsTouched(): void {
     this.onTouched?.();
+  }
+
+  initValidation(): void {
+    this.validate$
+      .pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
+      .subscribe((control) => {
+        this.status.set(this.validationService.validateStatus(control));
+        this.message.set(this.validationService.validateField(control));
+      });
   }
 }

@@ -56,6 +56,9 @@ export class VacancyComponent implements OnInit {
   jobList = computed(() => this.vjService.options());
   skillsList = computed(() => this.vsService.options());
 
+  jobSelectedList = computed(() => this.vjService.selectedOptions());
+  skillSelectedList = computed(() => this.vsService.selectedOptions());
+
   isJobLoading = computed(() => this.vjService.isLoading());
   isSkillsLoading = computed(() => this.vsService.isLoading());
 
@@ -111,8 +114,24 @@ export class VacancyComponent implements OnInit {
   private listenBaseFormChange(): void {
     this.vacancyForm.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((value) => {
+      .subscribe(() => {
         this.flService.disableSubmit.set(this.vacancyForm.invalid);
       });
+  }
+
+  onSelectJob(id: number): void {
+    this.vjService.onSelect(id);
+  }
+
+  onRemoveJob(id: number): void {
+    this.vjService.onRemove(id);
+  }
+
+  onSelectSkill(id: number): void {
+    this.vsService.onSelect(id);
+  }
+
+  onRemoveSkill(id: number): void {
+    this.vsService.onRemove(id);
   }
 }

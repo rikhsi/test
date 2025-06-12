@@ -1,10 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
   output,
-  viewChild,
 } from '@angular/core';
 import {
   ControlContainer,
@@ -25,14 +23,13 @@ import { VacancyBaseForm } from '../../models';
   viewProviders: [],
 })
 export class VcSkillsComponent {
-  selectListRef = viewChild(SelectListComponent);
-
-  selectedItems = input<SelectItem[]>([]);
+  selectedOptions = input<SelectItem[]>([]);
   isLoading = input<boolean>();
 
   options = input<SelectItem[]>([]);
-  selectedOptions = computed(() => this.selectListRef()?.selectedOptions());
 
+  removed = output<number>();
+  added = output<number>();
   searched = output<string>();
   loadMore = output<string>();
 
@@ -45,4 +42,11 @@ export class VcSkillsComponent {
   }
 
   constructor(private controlContainer: ControlContainer) {}
+
+  onReset(id: number): void {
+    const filtered = this.skillsControl.value.filter((item) => item !== id);
+
+    this.removed.emit(id);
+    this.skillsControl.setValue(filtered);
+  }
 }

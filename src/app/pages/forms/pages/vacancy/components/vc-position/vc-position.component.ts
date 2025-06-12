@@ -1,10 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   input,
   output,
-  viewChild,
 } from '@angular/core';
 import {
   FormGroup,
@@ -24,14 +22,12 @@ import { ChipComponent } from '@shared/components';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VcPositionComponent {
-  selectListRef = viewChild(SelectListComponent);
-
-  selectedItems = input<SelectItem[]>([]);
+  options = input<SelectItem[]>([]);
+  selectedOptions = input<SelectItem[]>([]);
   isLoading = input<boolean>();
 
-  options = input<SelectItem[]>([]);
-  selectedOptions = computed(() => this.selectListRef()?.selectedOptions());
-
+  removed = output<number>();
+  added = output<number>();
   searched = output<string>();
   loadMore = output<string>();
 
@@ -44,4 +40,10 @@ export class VcPositionComponent {
   }
 
   constructor(private controlContainer: ControlContainer) {}
+
+  onReset(): void {
+    this.removed.emit(this.jobControl.value.at(0));
+
+    this.jobControl.reset([]);
+  }
 }

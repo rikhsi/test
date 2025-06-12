@@ -14,7 +14,10 @@
     >
         <test-vc-position 
             [options]="jobList()"
+            [selectedOptions]="jobSelectedList()"
             [isLoading]="isJobLoading()"
+            (added)="onSelectJob($event)"
+            (removed)="onRemoveJob($event)"
             (loadMore)="jobSearch$.next($event)"
             (searched)="jobSearch$.next($event)"
         />
@@ -48,7 +51,10 @@
     >
         <test-vc-skills 
             [options]="skillsList()"
+            [selectedOptions]="skillSelectedList()"
             [isLoading]="isSkillsLoading()"
+            (added)="onSelectSkill($event)"
+            (removed)="onRemoveSkill($event)"
             (loadMore)="skillsSearch$.next($event)"
             (searched)="skillsSearch$.next($event)"
         />

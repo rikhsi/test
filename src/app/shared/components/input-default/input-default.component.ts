@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   forwardRef,
@@ -50,7 +51,7 @@ import { NgxMaskDirective } from 'ngx-mask';
 })
 export class InputDefaultComponent
   extends ControlBaseDirective<string>
-  implements Validator
+  implements Validator, AfterViewInit
 {
   label = input<string>();
   placeholder = input<string>('');
@@ -61,6 +62,12 @@ export class InputDefaultComponent
   separator = input<string>(' ');
 
   validate(control: AbstractControl): ValidationErrors | null {
+    this.validate$.next(control);
+
     return null;
+  }
+
+  ngAfterViewInit(): void {
+    this.initValidation();
   }
 }
