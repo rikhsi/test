@@ -1,8 +1,8 @@
 import { Directive, Host, DestroyRef, AfterViewInit } from '@angular/core';
-import { FormGroup, FormGroupDirective } from '@angular/forms';
+import { FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { VacancyBaseForm, VacancyPaymentForm } from '../models';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { toggleControlState } from '@shared/utils';
+import { setValidatorsAndUpdate, toggleControlState } from '@shared/utils';
 
 @Directive({
   selector: '[tPaymentDuration]',
@@ -61,6 +61,11 @@ export class PaymentDurationDirective implements AfterViewInit {
         toggleControlState(this.currency);
         toggleControlState(this.type);
 
+        setValidatorsAndUpdate(this.from);
+        setValidatorsAndUpdate(this.to);
+        setValidatorsAndUpdate(this.currency);
+        setValidatorsAndUpdate(this.type);
+
         this.paymentForm.reset(
           {
             type: 'MONTH',
@@ -77,6 +82,11 @@ export class PaymentDurationDirective implements AfterViewInit {
         toggleControlState(this.type, true);
         toggleControlState(this.to);
 
+        setValidatorsAndUpdate(this.from, [Validators.required]);
+        setValidatorsAndUpdate(this.to);
+        setValidatorsAndUpdate(this.currency, [Validators.required]);
+        setValidatorsAndUpdate(this.type, [Validators.required]);
+
         this.to?.reset();
 
         break;
@@ -86,6 +96,11 @@ export class PaymentDurationDirective implements AfterViewInit {
         this.to?.enable();
         this.currency?.enable();
         this.type?.enable();
+
+        setValidatorsAndUpdate(this.from, [Validators.required]);
+        setValidatorsAndUpdate(this.to, [Validators.required]);
+        setValidatorsAndUpdate(this.currency, [Validators.required]);
+        setValidatorsAndUpdate(this.type, [Validators.required]);
 
         break;
     }

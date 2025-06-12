@@ -3,6 +3,7 @@
         <t-select-default 
             [label]="'Рабочая область'"
             [options]="regions()"
+            [isRequired]="true"
             formControlName="region"
         />
 
@@ -10,6 +11,7 @@
             testDistrictByRegion
             [label]="'Город работы (район)'" 
             [options]="discricts()"
+            [isRequired]="true"
             formControlName="district"
         />
     </div>

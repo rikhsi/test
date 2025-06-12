@@ -6,44 +6,25 @@ import {
   VacancyBaseForm,
   VacancyLanguageForm,
 } from '../models';
-import {
-  fromLessThanToValidator,
-  paymentDurationValidator,
-} from '../validators';
 
 export const LANGUAGE_FORM = new FormGroup<VacancyLanguageForm>({
   type: new FormControl<number>(null, [Validators.required]),
   level: new FormControl<number>(null, [Validators.required]),
 });
 
-export const VACANCY_PAYMENT_FORM = new FormGroup<VacancyPaymentForm>(
-  {
-    from: new FormControl(null, [
-      Validators.minLength(1),
-      Validators.maxLength(5),
-    ]),
-    to: new FormControl(null, [
-      Validators.minLength(1),
-      Validators.maxLength(5),
-    ]),
-    currency: new FormControl(null),
-    type: new FormControl(null),
-    duration: new FormControl('NONE'),
-  },
-  [paymentDurationValidator(), fromLessThanToValidator()]
-);
+export const VACANCY_PAYMENT_FORM = new FormGroup<VacancyPaymentForm>({
+  from: new FormControl(null),
+  to: new FormControl(null),
+  currency: new FormControl(null),
+  type: new FormControl(null),
+  duration: new FormControl('NONE'),
+});
 
 export const VACANCY_LOCATION_FORM = new FormGroup<LocationBaseForm>({
   region: new FormControl(null, [Validators.required]),
   district: new FormControl(null, [Validators.required]),
-  address: new FormControl(null, [
-    Validators.required,
-    Validators.minLength(10),
-  ]),
-  coords: new FormControl(null, [
-    Validators.required,
-    arrayLengthValidator(2, 2),
-  ]),
+  address: new FormControl(null),
+  coords: new FormControl(null),
 });
 
 export const VACANCY_FORM = new FormGroup<VacancyBaseForm>({

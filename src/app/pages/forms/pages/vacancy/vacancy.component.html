@@ -4,12 +4,14 @@
     [formGroup]="vacancyForm"
 >
     <test-box-content 
+        [required]="true"
         [name]="'Название вакансии'"
     >
         <test-input-default formControlName="title"/>
     </test-box-content>
 
     <test-box-content 
+        [required]="true"
         [name]="'Должность сотрудника'"
     >
         <test-vc-position 
@@ -31,6 +33,7 @@
 
     <test-box-content 
         [name]="'Требования'"
+        [required]="true"
     >
 
     <test-vc-requirements 
@@ -41,12 +44,14 @@
     </test-box-content>
 
     <test-box-content 
+        [required]="true"
         [name]="'Описание'"
     >
         <test-textarea formControlName="description"/>
     </test-box-content>
 
     <test-box-content 
+        [required]="true"
         [name]="'Требуемые навыки'"
     >
         <test-vc-skills 
@@ -61,6 +66,7 @@
     </test-box-content>
 
     <test-box-content 
+        [required]="true"
         [name]="'Языки'"
     >
         <test-vc-language 

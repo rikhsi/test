@@ -9,6 +9,7 @@ import {
 import {
   AbstractControl,
   FormsModule,
+  NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
@@ -38,6 +39,11 @@ import { SelectItem } from '@typings';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectDefaultComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => SelectDefaultComponent),
       multi: true,
     },

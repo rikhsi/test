@@ -1,4 +1,11 @@
-import { DestroyRef, Directive, inject, model, signal } from '@angular/core';
+import {
+  DestroyRef,
+  Directive,
+  inject,
+  input,
+  model,
+  signal,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor } from '@angular/forms';
 import { ValidationService } from '@core/services';
@@ -15,7 +22,7 @@ export abstract class ControlBaseDirective<T> implements ControlValueAccessor {
 
   message = signal<string>(null);
   status = signal<NzValidateStatus>('');
-  required = signal<boolean>(false);
+  isRequired = input<boolean>(false);
 
   protected validationService = inject(ValidationService);
   protected destroyRef = inject(DestroyRef);
@@ -54,6 +61,8 @@ export abstract class ControlBaseDirective<T> implements ControlValueAccessor {
       .subscribe((control) => {
         this.status.set(this.validationService.validateStatus(control));
         this.message.set(this.validationService.validateField(control));
+
+        this.status();
       });
   }
 }

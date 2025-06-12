@@ -1,3 +1,8 @@
-<p class="name">{{name()}}</p>
+<p 
+    class="name" 
+    [ngClass]="{required: required()}"
+>
+    {{name()}}
+</p>
 
 <ng-content/>

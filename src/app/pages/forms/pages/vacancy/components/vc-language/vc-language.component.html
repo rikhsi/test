@@ -2,7 +2,8 @@
     <div class="controls">
         <t-select-default 
             [label]="'Название языка'"
-            [options]="languages()"
+            [options]="languages() | languageSelected: options()"
+            [isRequired]="true"
             formControlName="type"
         />
     
@@ -11,6 +12,7 @@
             [testLevelByLang]="baseForm"
             [languages]="languages()"
             formControlName="level"
+            [isRequired]="true"
             (push)="onPush($event)"
         />
     </div>

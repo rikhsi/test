@@ -11,5 +11,12 @@
     .name {
         margin-bottom: 16px;
         .text(600,18px,100%);
+
+        &.required {
+            &::after {
+                content: '*';
+                color: @t-red-100;
+            }
+        }
     }
 }

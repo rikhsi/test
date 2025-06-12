@@ -15,7 +15,7 @@ import {
   VacancyJobService,
   VacancySkillsService,
 } from './services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   VcLanguageComponent,
   VcLocationComponent,
@@ -30,6 +30,8 @@ import { PaymentDurationDirective } from './directives';
 import { FilterToItemPipe } from '@shared/pipes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormLayoutService } from '@layouts/services';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { RouteBase } from '@constants';
 
 @Component({
   selector: 'test-vacancy',
@@ -84,13 +86,26 @@ export class VacancyComponent implements OnInit {
     private vjService: VacancyJobService,
     private vsService: VacancySkillsService,
     private destroyRef: DestroyRef,
-    private flService: FormLayoutService
+    private flService: FormLayoutService,
+    private notification: NzNotificationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.listenBaseFormChange();
     this.initJobs();
     this.initSkills();
+    this.initSubmit();
+  }
+
+  private initSubmit(): void {
+    this.flService.submit$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.notification.success('Успешно!', 'Вакансия создана!');
+
+        this.router.navigate([RouteBase.MAIN]);
+      });
   }
 
   private initJobs(): void {

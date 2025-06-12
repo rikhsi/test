@@ -26,7 +26,7 @@ export class LevelByLangDirective {
 
   languages = input<SelectItem[]>([]);
 
-  currentDistricts = signal<SelectItem[]>([]);
+  currentLevels = signal<SelectItem[]>([]);
 
   push = output<[SelectItem, SelectItem]>();
 
@@ -43,22 +43,22 @@ export class LevelByLangDirective {
 
   ngAfterViewInit(): void {
     this.listToForm();
-    this.listenToRegion();
+    this.listenToType();
   }
 
-  private listenToRegion(): void {
+  private listenToType(): void {
     this.form.controls.type.valueChanges
       .pipe(
         tap(() => {
-          this.currentDistricts.set([]);
+          this.currentLevels.set([]);
           this.selectDefault.options.set([]);
           this.form.controls.level.reset();
         }),
         debounceTime(300),
         switchMap((languageId) => this.levelService.getByLanguage$(languageId)),
         tap((options) => {
-          this.currentDistricts.set(filterToSelect(options));
-          this.selectDefault.options.set(this.currentDistricts());
+          this.currentLevels.set(filterToSelect(options));
+          this.selectDefault.options.set(this.currentLevels());
         }),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -74,9 +74,7 @@ export class LevelByLangDirective {
       )
       .subscribe(({ level, type }) => {
         const findedType = this.languages().find((l) => l.value === type);
-        const findedLevel = this.currentDistricts().find(
-          (d) => d.value === level
-        );
+        const findedLevel = this.currentLevels().find((d) => d.value === level);
 
         this.parentList().controls.languages.push(
           new FormGroup({
@@ -88,6 +86,8 @@ export class LevelByLangDirective {
         this.push.emit([findedType, findedLevel]);
 
         this.form.reset(null, { emitEvent: false });
+
+        this.selectDefault.options.set([]);
       });
   }
 }

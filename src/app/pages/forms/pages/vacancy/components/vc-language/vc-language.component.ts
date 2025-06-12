@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { VacancyBaseForm } from '../../models';
 import { LANGUAGE_FORM } from '../../data';
+import { LanguageSelectedPipe } from '../../pipes';
 
 @Component({
   selector: 'test-vc-language',
@@ -22,6 +23,7 @@ import { LANGUAGE_FORM } from '../../data';
     ChipComponent,
     LevelByLangDirective,
     ReactiveFormsModule,
+    LanguageSelectedPipe,
   ],
   templateUrl: './vc-language.component.html',
   styleUrl: './vc-language.component.less',
