@@ -71,6 +71,9 @@
     >
         <test-vc-language 
             [languages]="routeData.languages | fti"
+            [selectedOptions]="langSelectedList()"
+            (added)="onSelectLang($event)"
+            (removed)="onRemoveLang($event)"
         />
     </test-box-content>
 

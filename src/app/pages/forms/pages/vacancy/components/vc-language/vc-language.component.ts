@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   input,
-  signal,
+  output,
 } from '@angular/core';
 import { ChipComponent, SelectDefaultComponent } from '@shared/components';
 import { SelectItem } from '@typings';
@@ -31,7 +31,10 @@ import { LanguageSelectedPipe } from '../../pipes';
 })
 export class VcLanguageComponent {
   languages = input<SelectItem[]>([]);
-  options = signal<SelectItem[]>([]);
+  selectedOptions = input<SelectItem[]>([]);
+
+  removed = output<number>();
+  added = output<[SelectItem, SelectItem]>();
 
   readonly languageForm = LANGUAGE_FORM;
 
@@ -46,20 +49,12 @@ export class VcLanguageComponent {
   constructor(private fgDirective: FormGroupDirective) {}
 
   onPush([type, level]: [SelectItem, SelectItem]): void {
-    this.options.update((current) => [
-      ...current,
-      {
-        label: `${type.label} (${level.label})`,
-        value: type.value,
-      },
-    ]);
+    this.added.emit([type, level]);
   }
 
   onRemove(optionId: number, index: number): void {
-    this.options.update((current) =>
-      current.filter((c) => c.value !== optionId)
-    );
-
     this.languageListForm.removeAt(index);
+
+    this.removed.emit(optionId);
   }
 }

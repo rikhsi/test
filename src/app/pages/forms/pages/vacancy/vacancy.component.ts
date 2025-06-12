@@ -13,6 +13,7 @@ import {
 import {
   VacancyFormService,
   VacancyJobService,
+  VacancyLanguageService,
   VacancySkillsService,
 } from './services';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,6 +33,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormLayoutService } from '@layouts/services';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { RouteBase } from '@constants';
+import { createVacancyForm } from './data';
+import { SelectItem } from '@typings';
 
 @Component({
   selector: 'test-vacancy',
@@ -52,7 +55,12 @@ import { RouteBase } from '@constants';
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [VacancyJobService, VacancySkillsService, VacancyFormService],
+  providers: [
+    VacancyJobService,
+    VacancySkillsService,
+    VacancyFormService,
+    VacancyLanguageService,
+  ],
 })
 export class VacancyComponent implements OnInit {
   jobList = computed(() => this.vjService.options());
@@ -60,6 +68,7 @@ export class VacancyComponent implements OnInit {
 
   jobSelectedList = computed(() => this.vjService.selectedOptions());
   skillSelectedList = computed(() => this.vsService.selectedOptions());
+  langSelectedList = computed(() => this.vLangService.selectedOptions());
 
   isJobLoading = computed(() => this.vjService.isLoading());
   isSkillsLoading = computed(() => this.vsService.isLoading());
@@ -85,6 +94,7 @@ export class VacancyComponent implements OnInit {
     private route: ActivatedRoute,
     private vjService: VacancyJobService,
     private vsService: VacancySkillsService,
+    private vLangService: VacancyLanguageService,
     private destroyRef: DestroyRef,
     private flService: FormLayoutService,
     private notification: NzNotificationService,
@@ -96,6 +106,31 @@ export class VacancyComponent implements OnInit {
     this.initJobs();
     this.initSkills();
     this.initSubmit();
+    this.initReset();
+  }
+
+  onSelectJob(id: number): void {
+    this.vjService.onSelect(id);
+  }
+
+  onRemoveJob(id: number): void {
+    this.vjService.onRemove(id);
+  }
+
+  onSelectSkill(id: number): void {
+    this.vsService.onSelect(id);
+  }
+
+  onRemoveSkill(id: number): void {
+    this.vsService.onRemove(id);
+  }
+
+  onSelectLang(items: [SelectItem, SelectItem]): void {
+    this.vLangService.onPush(items);
+  }
+
+  onRemoveLang(id: number): void {
+    this.vLangService.onRemove(id);
   }
 
   private initSubmit(): void {
@@ -105,6 +140,22 @@ export class VacancyComponent implements OnInit {
         this.notification.success('Успешно!', 'Вакансия создана!');
 
         this.router.navigate([RouteBase.MAIN]);
+      });
+  }
+
+  private initReset(): void {
+    this.flService.reset$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.vacancyForm.patchValue({
+          ...createVacancyForm().value,
+        });
+
+        this.vjService.selectedOptions.set([]);
+        this.vsService.selectedOptions.set([]);
+        this.vLangService.selectedOptions.set([]);
+
+        this.notification.success('Форма обнулена!', 'Заполните заново');
       });
   }
 
@@ -132,21 +183,5 @@ export class VacancyComponent implements OnInit {
       .subscribe(() => {
         this.flService.disableSubmit.set(this.vacancyForm.invalid);
       });
-  }
-
-  onSelectJob(id: number): void {
-    this.vjService.onSelect(id);
-  }
-
-  onRemoveJob(id: number): void {
-    this.vjService.onRemove(id);
-  }
-
-  onSelectSkill(id: number): void {
-    this.vsService.onSelect(id);
-  }
-
-  onRemoveSkill(id: number): void {
-    this.vsService.onRemove(id);
   }
 }

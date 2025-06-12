@@ -2,7 +2,7 @@
     <div class="controls">
         <t-select-default 
             [label]="'Название языка'"
-            [options]="languages() | languageSelected: options()"
+            [options]="languages() | languageSelected: selectedOptions()"
             [isRequired]="true"
             formControlName="type"
         />
@@ -18,7 +18,7 @@
     </div>
     
     <div class="chips">
-        @for (chip of options(); track chip.value;) {
+        @for (chip of selectedOptions(); track chip.value;) {
             <test-chip 
                 [name]="chip.label" 
                 (click)="onRemove(chip.value, $index)"
