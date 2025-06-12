@@ -1,0 +1,10 @@
+[
+    {
+        "id": "resume",
+        "enable": false
+    },
+        {
+        "id": "vacancy",
+        "enable": true
+    }
+]

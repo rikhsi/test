@@ -15,7 +15,6 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { filter } from 'rxjs';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'test-form-layout',
@@ -30,7 +29,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
   templateUrl: './form-layout.component.html',
   styleUrl: './form-layout.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [FormLayoutService, NzModalService, NzNotificationService],
+  providers: [FormLayoutService, NzModalService],
 })
 export class FormLayoutComponent {
   disableSubmit = computed(() => this.flService.disableSubmit());

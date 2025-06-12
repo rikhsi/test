@@ -7,3 +7,4 @@ export * from './language.service';
 export * from './level.service';
 export * from './job.service';
 export * from './skills.service';
+export * from './forms.service';

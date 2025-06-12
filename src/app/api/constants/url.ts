@@ -33,3 +33,7 @@ export enum JobApiUrl {
 export enum SkillsApiUrl {
   LIST = 'skills.json',
 }
+
+export enum FormsApiUrl {
+  LIST = 'forms.json',
+}
