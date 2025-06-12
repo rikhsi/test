@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PaymentDurationDirective } from './directives';
 import { FilterToItemPipe } from '@shared/pipes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormLayoutService } from '@layouts/services';
 
 @Component({
   selector: 'test-vacancy',
@@ -79,10 +80,12 @@ export class VacancyComponent implements OnInit {
     private route: ActivatedRoute,
     private vjService: VacancyJobService,
     private vsService: VacancySkillsService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
+    private flService: FormLayoutService
   ) {}
 
   ngOnInit(): void {
+    this.listenBaseFormChange();
     this.initJobs();
     this.initSkills();
   }
@@ -103,5 +106,13 @@ export class VacancyComponent implements OnInit {
       .subscribe();
 
     this.skillsSearch$.next(null);
+  }
+
+  private listenBaseFormChange(): void {
+    this.vacancyForm.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((value) => {
+        this.flService.disableSubmit.set(this.vacancyForm.invalid);
+      });
   }
 }
