@@ -1,5 +1,10 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  HostListener,
+} from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MODAL_OPTIONS } from '@constants';
 import { RESET_MODAL_DATA, SUBMIT_MODAL_DATA } from '@layouts/data';
@@ -49,16 +54,19 @@ export class FormLayoutComponent {
       });
   }
 
+  @HostListener('keydown.enter', ['$event'])
   submit(): void {
-    this.nmService
-      .create<MConfirmComponent, ConfirmModal, boolean>({
-        ...MODAL_OPTIONS,
-        nzData: SUBMIT_MODAL_DATA,
-        nzContent: MConfirmComponent,
-      })
-      .afterClose.pipe(filter((state) => state))
-      .subscribe(() => {
-        this.flService.submit$.next();
-      });
+    if (!this.disableSubmit()) {
+      this.nmService
+        .create<MConfirmComponent, ConfirmModal, boolean>({
+          ...MODAL_OPTIONS,
+          nzData: SUBMIT_MODAL_DATA,
+          nzContent: MConfirmComponent,
+        })
+        .afterClose.pipe(filter((state) => state))
+        .subscribe(() => {
+          this.flService.submit$.next();
+        });
+    }
   }
 }

@@ -52,7 +52,7 @@ import { RouteBase } from '@constants';
   templateUrl: './vacancy.component.html',
   styleUrl: './vacancy.component.less',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [VacancyJobService, VacancySkillsService],
+  providers: [VacancyJobService, VacancySkillsService, VacancyFormService],
 })
 export class VacancyComponent implements OnInit {
   jobList = computed(() => this.vjService.options());

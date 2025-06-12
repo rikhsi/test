@@ -19,7 +19,7 @@ export class VacancyJobService extends JobService {
   onSelect(id: number): void {
     const findedItem = this.options().find((item) => item.value === id);
 
-    this.selectedOptions.update((current) => [...current, findedItem]);
+    this.selectedOptions.update(() => [findedItem]);
   }
 
   onRemove(id: number): void {
